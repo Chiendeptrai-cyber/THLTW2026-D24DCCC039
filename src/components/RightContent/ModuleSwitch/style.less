@@ -1,0 +1,58 @@
+@import '~antd/es/style/themes/default.less';
+@import '../../../styles/_variable.less';
+
+.module-view {
+	padding: 12px;
+
+	.module-header {
+		margin: 5px 0 12px 0;
+		font-weight: 700;
+		font-size: 16px;
+		text-align: center;
+		text-transform: uppercase;
+	}
+
+	.module-item {
+		padding: 5px;
+		text-align: center;
+		border-radius: @border-radius;
+		cursor: pointer;
+		transition: 0.3s;
+
+		&:hover {
+			background-color: rgba(0, 0, 0, 0.05);
+			transition: 0.3s;
+
+			.anticon,
+			img {
+				transform: scale(1.2);
+			}
+		}
+
+		.anticon {
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			height: 56px;
+			margin: 12px;
+
+			color: #bbb;
+			font-size: 44px;
+			transition: 0.3s;
+		}
+
+		img {
+			height: 60px;
+			margin: 10px;
+			transition: 0.3s;
+		}
+
+		.module-name {
+			display: block;
+			height: 35px;
+			color: #333;
+			font-weight: 600;
+			line-height: 1.2;
+		}
+	}
+}

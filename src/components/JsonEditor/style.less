@@ -1,0 +1,16 @@
+@import '~antd/es/style/themes/default.less';
+@import '../../styles/_variable.less';
+
+@border-color: #d9d9d9;
+
+.monaco-wrapper {
+	border: 1px solid @border-color !important;
+	border-radius: @border-radius !important;
+	transition: 0.3s;
+
+	&:hover,
+	&.tox-edit-focus {
+		border-color: var(--primary-color) !important;
+		transition: 0.3s;
+	}
+}

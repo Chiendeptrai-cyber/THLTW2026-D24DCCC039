@@ -1,0 +1,155 @@
+@import '~antd/es/style/themes/default.less';
+@import '../../styles/_variable.less';
+
+.table-base {
+	.header {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 8px;
+		justify-content: space-between;
+		margin-bottom: 8px;
+
+		.action {
+			display: flex;
+			flex-wrap: wrap;
+			gap: 8px;
+		}
+
+		.extra {
+			display: flex;
+			flex-wrap: wrap;
+			gap: 8px;
+			justify-content: flex-end;
+
+			.total {
+				height: 32px;
+				padding: 0 15px;
+				line-height: 1.5715;
+				white-space: nowrap;
+				border: 1px solid #d9d9d9;
+				border-radius: @border-radius;
+				transition: 0.3s;
+
+				&:hover {
+					border-color: var(--primary-color);
+					transition: 0.3s;
+				}
+
+				span {
+					margin-left: 8px;
+					color: var(--primary-color);
+					font-weight: 700;
+					font-size: 1.1rem;
+				}
+
+				&.small {
+					height: 24px;
+					padding: 0 7px;
+					line-height: 20px;
+				}
+			}
+		}
+	}
+
+	/* Phân biệt columns có sort */
+	.ant-table-column-sort {
+		.ant-table-column-title {
+			color: var(--primary-color);
+			text-decoration: underline;
+		}
+	}
+
+	/* Phân biệt columns có filter */
+	.ant-table-column-title:has(+ .active) {
+		color: var(--primary-color);
+		text-decoration: underline;
+	}
+
+	/* Track */
+	::-webkit-scrollbar-track {
+		background: #f0f0f0;
+	}
+}
+
+.filter-item-space {
+	width: 100%;
+	margin-bottom: 12px;
+	border-bottom: 1px solid #f1f1f1;
+
+	.ant-space-item:last-child {
+		width: 100%;
+	}
+}
+
+.ant-modal.modal-ho-so-nhan-su {
+	top: 0;
+	width: 100vw !important;
+	height: 100vh;
+	margin: 0;
+
+	.ant-modal-content {
+		width: 100vw;
+		height: 100vh;
+		border-radius: 0;
+	}
+}
+
+.column-search-box {
+	display: flex;
+	gap: 5px;
+	padding: 8px;
+}
+
+/* stylelint-disable-next-line no-duplicate-selectors */
+.ant-modal.modal-ho-so-nhan-su {
+	@media (min-width: @screen-md) {
+		top: 0;
+		width: 100vw !important;
+		height: 100vh;
+		margin: 0;
+
+		.ant-modal-content {
+			width: 100vw;
+			height: 100vh;
+			border-radius: 0;
+		}
+	}
+}
+
+.row-dragging {
+	z-index: 1001;
+	background: #fafafa;
+	border: 1px solid #ccc;
+}
+
+.row-dragging td {
+	padding: 3px 12px !important;
+}
+
+.row-dragging .drag-visible {
+	visibility: visible;
+}
+
+/* stylelint-disable-next-line no-duplicate-selectors */
+.column-search-box {
+	flex-direction: column;
+}
+
+@media (max-width: @screen-xs) {
+	.ant-btn:has(.span-extend) {
+		// antd btn icon only
+		width: 32px;
+		height: 32px;
+		padding: 2.4px 0;
+		font-size: 16px;
+		vertical-align: -3px;
+
+		.span-extend {
+			display: none;
+		}
+	}
+
+	// .extra {
+	// 	width: 100%;
+	// }
+}

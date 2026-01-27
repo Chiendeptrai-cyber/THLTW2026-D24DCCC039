@@ -1,0 +1,146 @@
+.ant-pro-header-light {
+	.ant-pro-global-header-layout-mix {
+		background-color: var(--primary-color);
+
+		.ant-pro-global-header-logo a img {
+			height: 100%;
+			padding: 5px 0;
+
+			@media (max-width: @screen-xs) {
+				max-width: 160px;
+			}
+		}
+	}
+}
+
+.ant-pro-header-dark {
+	.ant-pro-global-header-layout-mix {
+		.ant-pro-global-header-logo a img {
+			height: 100%;
+			padding: 8px 0;
+		}
+	}
+}
+
+.ant-menu-light.ant-pro-sider-menu {
+	padding: 18px 0;
+	// font-weight: 600;
+
+	.ant-menu-item,
+	.ant-menu-submenu-title {
+		height: auto;
+		min-height: 36px;
+		padding: 5px 12px;
+		padding-left: 12px !important;
+		line-height: 1.5;
+		border-radius: 2px;
+
+		&::after {
+			border: none;
+		}
+	}
+
+	.ant-pro-menu-item {
+		white-space: break-spaces;
+	}
+
+	li.ant-menu-item-selected {
+		padding-left: 12px !important;
+		color: white;
+		// background-color: var(--primary-color);
+	}
+
+	.ant-menu-submenu {
+		& > .ant-menu-submenu-title {
+			padding-right: 24px !important;
+			padding-left: 12px !important;
+			border-radius: 2px;
+
+			.ant-menu-submenu-arrow {
+				right: 10px;
+			}
+		}
+
+		.ant-menu-sub {
+			padding-left: 12px;
+			background-color: #f8f8fa;
+			border-radius: 2px;
+
+			.ant-menu-sub {
+				.ant-menu-item-only-child {
+					padding-left: 12px !important;
+				}
+			}
+		}
+	}
+
+	&.ant-menu-inline-collapsed {
+		padding: 24px 0;
+
+		.ant-menu-item {
+			padding-left: calc(50% - 16px / 2) !important;
+		}
+
+		li.ant-menu-item-selected {
+			padding-left: calc(50% - 16px / 2) !important;
+		}
+
+		.ant-menu-submenu {
+			& > .ant-menu-submenu-title {
+				padding-left: calc(50% - 16px / 2) !important;
+			}
+		}
+	}
+}
+
+.ant-menu-dark.ant-pro-sider-menu {
+	.ant-menu-item,
+	.ant-menu-submenu-title {
+		height: auto !important;
+		min-height: 36px;
+		padding-top: 5px;
+		padding-bottom: 5px;
+		line-height: 1.5 !important;
+		border-radius: 2px;
+
+		&::after {
+			border: none;
+		}
+	}
+
+	.ant-pro-menu-item {
+		white-space: break-spaces;
+	}
+}
+
+.ant-pro-sider-menu.ant-menu-inline-collapsed {
+	.ant-menu-item,
+	.ant-menu-submenu-title {
+		height: 40px !important;
+		padding-top: 0;
+		padding-bottom: 0;
+	}
+}
+
+.ant-layout-content {
+	margin: 18px !important;
+
+	@media (max-width: @screen-xs) {
+		margin: 12px !important;
+	}
+}
+
+.ant-layout {
+	min-height: 100vh;
+}
+
+.ant-pro-sider.ant-layout-sider.ant-pro-sider-fixed {
+	left: unset;
+}
+
+// Compatible with IE11
+@media screen and(-ms-high-contrast: active), (-ms-high-contrast: none) {
+	body .ant-design-pro > .ant-layout {
+		min-height: 100vh;
+	}
+}

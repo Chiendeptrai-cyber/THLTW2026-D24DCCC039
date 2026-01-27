@@ -1,0 +1,17 @@
+{
+  "name": "vi",
+  "options": {
+    "toolbar": {
+      "exportToSVG": "Tải về file SVG",
+      "exportToPNG": "Tải về file PNG",
+      "exportToCSV": "Tải về file CSV",
+      "menu": "Menu",
+      "selection": "Vùng chọn",
+      "selectionZoom": "Phóng to vùng chọn",
+      "zoomIn": "Phóng to",
+      "zoomOut": "Thu nhỏ",
+      "pan": "Di chuyển",
+      "reset": "Kích thước gốc"
+    }
+  }
+}

@@ -1,0 +1,57 @@
+@import '~antd/es/style/themes/default.less';
+
+.prev {
+	position: absolute;
+	top: 50%;
+	left: -10px;
+	transform: translateY(-50%);
+}
+
+.next {
+	position: absolute;
+	top: 50%;
+	right: -10px;
+	transform: translateY(-50%);
+}
+
+.row {
+	display: flex;
+	gap: 12px;
+	align-items: center;
+	justify-content: center;
+	margin-top: 8px;
+	margin-bottom: 12px;
+
+	@media (min-width: @screen-xs) {
+		button {
+			height: 100%;
+			background-color: rgba(225, 225, 225, 0.2);
+			border: none;
+
+			span:not([class*='anticon']) {
+				display: none;
+			}
+
+			&:hover,
+			&:focus {
+				background-color: rgba(219, 219, 219, 0.4);
+			}
+			&:disabled,
+			&:disabled:hover {
+				background: none;
+			}
+		}
+	}
+}
+
+@media (max-width: @screen-xs) {
+	.next,
+	.prev {
+		position: initial;
+		transform: none;
+	}
+}
+
+.react-pdf__Page__canvas {
+	margin: auto;
+}

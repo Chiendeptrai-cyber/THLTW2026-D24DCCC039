@@ -1,0 +1,122 @@
+@import '~antd/es/style/themes/default.less';
+
+@pro-header-hover-bg: rgba(122, 127, 141, 0.1);
+
+.menu {
+	:global(.anticon) {
+		margin-right: 8px;
+	}
+
+	:global(.ant-dropdown-menu-item) {
+		min-width: 160px;
+	}
+}
+
+.right {
+	display: flex;
+	gap: 5px;
+	align-items: center;
+	float: right;
+	margin-left: auto;
+	overflow: hidden;
+
+	:global(.anticon),
+	a>img {
+		display: flex;
+		align-items: center;
+		height: 48px;
+		padding: 0 8px;
+		font-size: 20px;
+
+		&:hover,
+		&:focus {
+			background: @pro-header-hover-bg;
+		}
+	}
+
+	a>img {
+		padding: 12px 8px;
+	}
+
+	.action {
+		display: flex;
+		align-items: center;
+		height: 48px;
+		padding: 0 8px;
+		cursor: pointer;
+		transition: all 0.3s;
+
+		>span {
+			vertical-align: middle;
+		}
+
+		&:hover {
+			background: @pro-header-hover-bg;
+		}
+
+		&:global(.opened) {
+			background: @pro-header-hover-bg;
+		}
+	}
+
+	.name {
+		// color: #fff;
+	}
+
+	.account {
+		.avatar {
+			margin-right: 8px;
+			height: 42px;
+			width: 42px;
+			line-height: 42px;
+			font-size: 22px;
+
+			img {
+				object-fit: cover;
+			}
+
+			:global(.anticon) {
+				height: 32px;
+				font-size: 32px;
+			}
+		}
+	}
+}
+
+.dark {
+	.action {
+		&:hover {
+			background: #252a3d;
+		}
+
+		&:global(.opened) {
+			background: #252a3d;
+		}
+	}
+}
+
+@media only screen and (max-width: @screen-md) {
+	:global(.ant-divider-vertical) {
+		vertical-align: unset;
+	}
+
+	.name {
+		display: none;
+	}
+
+	.right {
+		position: absolute;
+		top: 0;
+		right: 12px;
+
+		.account {
+			.avatar {
+				margin-right: 0;
+			}
+		}
+
+		.search {
+			display: none;
+		}
+	}
+}

@@ -1,0 +1,43 @@
+@import '~antd/es/style/themes/default.less';
+
+.popover {
+  position: relative;
+  width: 400px;
+}
+
+.noticeButton {
+  display: inline-block;
+  cursor: pointer;
+  transition: all 0.3s;
+}
+.icon {
+  padding: 4px;
+  vertical-align: middle;
+}
+
+.badge {
+  height: 48px;
+  font-size: 16px;
+  line-height: 48px;
+
+  :global(.ant-badge-count) {
+    top: 10px;
+    right: 5px;
+    padding: 0;
+  }
+}
+
+.tabs {
+  :global {
+    .ant-tabs-nav-list {
+      margin: auto;
+    }
+
+    .ant-tabs-nav-scroll {
+      text-align: center;
+    }
+    .ant-tabs-bar {
+      margin-bottom: 0;
+    }
+  }
+}
