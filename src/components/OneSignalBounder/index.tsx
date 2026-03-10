@@ -13,11 +13,21 @@ const OneSignalBounder = (props: { children: React.ReactNode }) => {
 
 	const getUserIdOnesignal = async () => {
 		if (!!oneSignalClient) {
-			await OneSignal.init({
-				appId: oneSignalClient,
-			});
-			const id = await OneSignal.getUserId();
-			setOneSignalId(id);
+			try {
+				await OneSignal.init({
+					appId: oneSignalClient,
+				});
+				const id = await OneSignal.getUserId();
+				setOneSignalId(id);
+			} catch (error: any) {
+				// Suppress origin validation errors during development
+				// OneSignal will only work on the configured production domain
+				if (error?.message?.includes('origin')) {
+					console.log('[OneSignal] Skipped initialization on development domain');
+				} else {
+					console.error('[OneSignal] Initialization error:', error);
+				}
+			}
 		}
 	};
 

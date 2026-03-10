@@ -42,6 +42,49 @@
 		icon: 'OrderedListOutlined',
 		component: './TodoList',
 	},
+	{
+		path: '/oan-tu-ti',
+		name: 'Oẳn Tù Tì',
+		icon: 'BgColorsOutlined',
+		component: './OanTuTi',
+	},
+	{
+		name: 'Quản lý đề thi',
+		path: '/quan-ly-de-thi',
+		icon: 'FileTextOutlined',
+		routes: [
+			{
+				path: 'khoi-kien-thuc',
+				name: 'Khối kiến thức',
+				component: './QuanLyDeThiTuLuan/KhoiKienThuc',
+			},
+			{
+				path: 'mon-hoc',
+				name: 'Môn học',
+				component: './QuanLyDeThiTuLuan/MonHoc',
+			},
+			{
+				path: 'cau-hoi',
+				name: 'Câu hỏi',
+				component: './QuanLyDeThiTuLuan/CauHoi',
+			},
+			{
+				path: 'cau-truc-de-thi',
+				name: 'Cấu trúc đề thi',
+				component: './QuanLyDeThiTuLuan/CauTrucDeThiTuLuan',
+			},
+			{
+				path: 'tao-de-thi',
+				name: 'Tạo đề thi',
+				component: './QuanLyDeThiTuLuan/TaoDeThiTuLuan',
+			},
+			{
+				path: 'quan-ly-de-thi-da-tao',
+				name: 'Đề thi đã tạo',
+				component: './QuanLyDeThiTuLuan/QuanLyDeThiDaTao',
+			},
+		],
+	},
 
 	// DANH MUC HE THONG
 	// {
