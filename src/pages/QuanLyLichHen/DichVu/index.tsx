@@ -148,12 +148,12 @@ const DichVuPage: React.FC = () => {
 			>
 				<Table
 					columns={columns}
-					dataSource={services}
+					dataSource={Array.isArray(services) ? services : []}
 					loading={loading}
 					rowKey='id'
 					pagination={{
 						pageSize: 10,
-						total: services.length,
+						total: Array.isArray(services) ? services.length : 0,
 						showSizeChanger: true,
 					}}
 					scroll={{ x: 1400 }}
@@ -162,10 +162,13 @@ const DichVuPage: React.FC = () => {
 
 			<Modal
 				title={editingId ? 'Cập nhật Dịch vụ' : 'Thêm Dịch vụ'}
-				open={isModalVisible}
+				visible={isModalVisible}
 				onOk={handleSubmit}
 				onCancel={handleCloseModal}
 				width={600}
+				destroyOnClose
+				zIndex={9999}
+				centered
 			>
 				<Form form={form} layout='vertical' autoComplete='off'>
 					<Form.Item

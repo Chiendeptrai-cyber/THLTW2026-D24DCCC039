@@ -162,12 +162,12 @@ const DanhGiaPage: React.FC = () => {
 			<Card title='Quản lý Đánh giá & Nhận xét'>
 				<Table
 					columns={columns}
-					dataSource={ratings}
+					dataSource={Array.isArray(ratings) ? ratings : []}
 					loading={loading}
 					rowKey='id'
 					pagination={{
 						pageSize: 10,
-						total: ratings.length,
+						total: Array.isArray(ratings) ? ratings.length : 0,
 						showSizeChanger: true,
 					}}
 					scroll={{ x: 1400 }}
@@ -176,10 +176,13 @@ const DanhGiaPage: React.FC = () => {
 
 			<Modal
 				title={editingId ? 'Cập nhật Đánh giá' : 'Thêm Đánh giá'}
-				open={isModalVisible}
+				visible={isModalVisible}
 				onOk={handleSubmit}
 				onCancel={handleCloseModal}
 				width={600}
+				destroyOnClose
+				zIndex={9999}
+				centered
 			>
 				<Form form={form} layout='vertical' autoComplete='off'>
 					<Form.Item

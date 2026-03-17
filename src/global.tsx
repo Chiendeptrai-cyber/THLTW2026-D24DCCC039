@@ -5,6 +5,18 @@ import defaultSettings from '../config/defaultSettings';
 const { pwa } = defaultSettings;
 const isHttps = document.location.protocol === 'https:';
 
+// Suppress OneSignal domain restriction errors during development
+window.addEventListener('unhandledrejection', (event) => {
+	const reason = event.reason || '';
+	const reasonStr = String(reason);
+	
+	// Suppress OneSignal domain restriction errors
+	if (reasonStr.includes('OneSignal') && reasonStr.includes('origin')) {
+		event.preventDefault();
+		console.log('[Development] Suppressed OneSignal domain restriction error');
+	}
+});
+
 // if pwa is true
 if (pwa) {
   // Notify user if offline now

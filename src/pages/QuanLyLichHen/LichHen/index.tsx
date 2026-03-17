@@ -257,12 +257,12 @@ const LichHenPage: React.FC = () => {
 			>
 				<Table
 					columns={columns}
-					dataSource={appointments}
+					dataSource={Array.isArray(appointments) ? appointments : []}
 					loading={loading}
 					rowKey='id'
 					pagination={{
 						pageSize: 10,
-						total: appointments.length,
+						total: Array.isArray(appointments) ? appointments.length : 0,
 						showSizeChanger: true,
 					}}
 					scroll={{ x: 1400 }}
@@ -272,10 +272,13 @@ const LichHenPage: React.FC = () => {
 			{/* Modal Thêm/Sửa Lịch hẹn */}
 			<Modal
 				title={editingId ? 'Cập nhật Lịch hẹn' : 'Đặt Lịch hẹn mới'}
-				open={isModalVisible}
+				visible={isModalVisible}
 				onOk={handleSubmit}
 				onCancel={handleCloseModal}
 				width={700}
+				destroyOnClose
+				zIndex={9999}
+				centered
 			>
 				<Form form={form} layout='vertical' autoComplete='off'>
 					<Form.Item
@@ -360,7 +363,7 @@ const LichHenPage: React.FC = () => {
 			<Drawer
 				title='Chi tiết Lịch hẹn'
 				onClose={() => setDetailDrawerVisible(false)}
-				open={detailDrawerVisible}
+				visible={detailDrawerVisible}
 				width={500}
 			>
 				{selectedAppointment && (

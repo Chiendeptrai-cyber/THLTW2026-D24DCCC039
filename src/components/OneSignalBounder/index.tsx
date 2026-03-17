@@ -12,21 +12,25 @@ const OneSignalBounder = (props: { children: React.ReactNode }) => {
 	// let iframe: HTMLIFrameElement | null = null;
 
 	const getUserIdOnesignal = async () => {
-		if (!!oneSignalClient) {
-			try {
-				await OneSignal.init({
-					appId: oneSignalClient,
-				});
-				const id = await OneSignal.getUserId();
-				setOneSignalId(id);
-			} catch (error: any) {
-				// Suppress origin validation errors during development
-				// OneSignal will only work on the configured production domain
-				if (error?.message?.includes('origin')) {
-					console.log('[OneSignal] Skipped initialization on development domain');
-				} else {
-					console.error('[OneSignal] Initialization error:', error);
-				}
+		// Skip OneSignal on development/localhost - only works on production domain
+		const isProduction = window.location.hostname === 'sinhvien.hvpnvn.edu.vn';
+		if (!isProduction || !oneSignalClient) {
+			return;
+		}
+
+		try {
+			await OneSignal.init({
+				appId: oneSignalClient,
+			});
+			const id = await OneSignal.getUserId();
+			setOneSignalId(id);
+		} catch (error: any) {
+			// Suppress origin validation errors during development
+			const errorMsg = error?.message || '';
+			if (errorMsg.includes('origin') || errorMsg.includes('restricted')) {
+				console.log('[OneSignal] Skipped - domain not configured for this origin');
+			} else {
+				console.error('[OneSignal] Initialization error:', error);
 			}
 		}
 	};

@@ -155,9 +155,6 @@
 		hideInMenu: true,
 	},
 	{
-		path: '/',
-	},
-	{
 		path: '/403',
 		component: './exception/403/403Page',
 		layout: false,
@@ -168,6 +165,7 @@
 		layout: false,
 	},
 	{
+		path: '*',
 		component: './exception/404',
 	},
 ];
