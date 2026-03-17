@@ -1,24 +1,6 @@
 import React, { useState } from 'react';
-import {
-	Card,
-	Table,
-	Button,
-	Space,
-	message,
-	Tag,
-	Row,
-	Col,
-	Tooltip,
-	Drawer,
-	Popconfirm,
-} from 'antd';
-import {
-	EyeOutlined,
-	DeleteOutlined,
-	DownloadOutlined,
-	CopyOutlined,
-	FileTextOutlined,
-} from '@ant-design/icons';
+import { Card, Table, Button, Space, message, Tag, Row, Col, Tooltip, Drawer, Popconfirm } from 'antd';
+import { EyeOutlined, DeleteOutlined, DownloadOutlined, CopyOutlined, FileTextOutlined } from '@ant-design/icons';
 import { TestPaper, DIFFICULTY_LABELS, DifficultyLevel } from '@/types/exam';
 import useTestPapers from '@/models/testpapers';
 
@@ -128,22 +110,14 @@ ${paper.questions.map((q, i) => `${i + 1}. ${q.code} - ${q.content} (${DIFFICULT
 						onClick={() => handleViewPaper(record)}
 						title='Xem chi tiết'
 					/>
-					<Button
-						size='small'
-						icon={<CopyOutlined />}
-						onClick={() => handleDuplicatePaper(record)}
-						title='Nhân bản'
-					/>
+					<Button size='small' icon={<CopyOutlined />} onClick={() => handleDuplicatePaper(record)} title='Nhân bản' />
 					<Button
 						size='small'
 						icon={<DownloadOutlined />}
 						onClick={() => handleDownloadPaper(record)}
 						title='Tải xuống'
 					/>
-					<Popconfirm
-						title='Bạn có chắc chắn muốn xóa đề thi này?'
-						onConfirm={() => handleDeletePaper(record.id)}
-					>
+					<Popconfirm title='Bạn có chắc chắn muốn xóa đề thi này?' onConfirm={() => handleDeletePaper(record.id)}>
 						<Button danger size='small' icon={<DeleteOutlined />} title='Xóa' />
 					</Popconfirm>
 				</Space>
@@ -168,13 +142,7 @@ ${paper.questions.map((q, i) => `${i + 1}. ${q.code} - ${q.content} (${DIFFICULT
 						<p>Chưa có đề thi nào</p>
 					</div>
 				) : (
-					<Table
-						dataSource={papers}
-						columns={columns}
-						rowKey='id'
-						pagination={{ pageSize: 10 }}
-						scroll={{ x: 1200 }}
-					/>
+					<Table dataSource={papers} columns={columns} rowKey='id' pagination={{ pageSize: 10 }} scroll={{ x: 1200 }} />
 				)}
 			</Card>
 
@@ -267,8 +235,7 @@ ${paper.questions.map((q, i) => `${i + 1}. ${q.code} - ${q.content} (${DIFFICULT
 										title: 'Khối kiến thức',
 										dataIndex: 'knowledgeBlockId',
 										width: 100,
-										render: (blockId: string) =>
-											mockKnowledgeBlocks.find((b) => b.id === blockId)?.name,
+										render: (blockId: string) => mockKnowledgeBlocks.find((b) => b.id === blockId)?.name,
 									},
 								]}
 								rowKey='id'

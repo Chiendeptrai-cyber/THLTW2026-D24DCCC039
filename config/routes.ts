@@ -49,6 +49,38 @@
 		component: './OanTuTi',
 	},
 	{
+		name: 'Quản lý Lịch hẹn',
+		path: '/quan-ly-lich-hen',
+		icon: 'CalendarOutlined',
+		routes: [
+			{
+				path: 'nhan-vien',
+				name: 'Quản lý Nhân viên',
+				component: './QuanLyLichHen/NhanVien',
+			},
+			{
+				path: 'dich-vu',
+				name: 'Quản lý Dịch vụ',
+				component: './QuanLyLichHen/DichVu',
+			},
+			{
+				path: 'lich-hen',
+				name: 'Quản lý Lịch hẹn',
+				component: './QuanLyLichHen/LichHen',
+			},
+			{
+				path: 'danh-gia',
+				name: 'Đánh giá & Nhận xét',
+				component: './QuanLyLichHen/DanhGia',
+			},
+			{
+				path: 'thong-ke',
+				name: 'Thống kê & Báo cáo',
+				component: './QuanLyLichHen/ThongKe',
+			},
+		],
+	},
+	{
 		name: 'Quản lý đề thi',
 		path: '/quan-ly-de-thi',
 		icon: 'FileTextOutlined',

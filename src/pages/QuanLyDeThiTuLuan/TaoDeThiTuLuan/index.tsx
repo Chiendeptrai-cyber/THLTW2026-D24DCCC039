@@ -1,21 +1,13 @@
 import React, { useState } from 'react';
-import {
-	Button,
-	Card,
-	Form,
-	Select,
-	InputNumber,
-	message,
-	Table,
-	Row,
-	Col,
-	Result,
-	Tag,
-	Divider,
-	Radio,
-} from 'antd';
+import { Button, Card, Form, Select, InputNumber, message, Table, Row, Col, Result, Tag, Divider, Radio } from 'antd';
 import { PlusOutlined, FileTextOutlined, CheckOutlined } from '@ant-design/icons';
-import { TestPaperQuestionConfig, DIFFICULTY_OPTIONS, DIFFICULTY_LABELS, TestPaper, DifficultyLevel } from '@/types/exam';
+import {
+	TestPaperQuestionConfig,
+	DIFFICULTY_OPTIONS,
+	DIFFICULTY_LABELS,
+	TestPaper,
+	DifficultyLevel,
+} from '@/types/exam';
 import useTestPapers from '@/models/testpapers';
 import { history } from 'umi';
 
@@ -245,7 +237,7 @@ const TaoDeThiTuLuan: React.FC = () => {
 			dataIndex: 'difficulty',
 			key: 'difficulty',
 			width: 100,
-						render: (difficulty: string) => DIFFICULTY_LABELS[difficulty as DifficultyLevel]?? difficulty,
+			render: (difficulty: string) => DIFFICULTY_LABELS[difficulty as DifficultyLevel] ?? difficulty,
 		},
 		{
 			title: 'Khối kiến thức',
