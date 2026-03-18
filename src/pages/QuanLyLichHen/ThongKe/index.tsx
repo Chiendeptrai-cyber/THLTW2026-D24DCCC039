@@ -45,22 +45,27 @@ const ThongKePage: React.FC = () => {
 
 			// Lấy thống kê chung
 			const stats = await StatisticsService.getOverallStatistics(startDate, endDate);
-			setStatistics(stats);
+			setStatistics(stats ?? {});
 
 			// Lấy thống kê theo ngày
 			if (startDate && endDate) {
 				const byDate = await StatisticsService.getAppointmentsByDate(startDate, endDate);
-				setAppointmentsByDate(byDate || []);
+				// Ensure it's an array
+				const dateArray = Array.isArray(byDate) ? byDate : byDate?.data ? byDate.data : [];
+				setAppointmentsByDate(dateArray);
 			}
 
 			// Lấy thống kê doanh thu
 			const revenue = await StatisticsService.getRevenueStatistics(startDate, endDate);
-			setRevenueData(revenue || []);
+			const revenueArray = Array.isArray(revenue) ? revenue : revenue?.data ? revenue.data : [];
+			setRevenueData(revenueArray);
 
 			// Lấy danh sách lịch hẹn
 			const apts = await AppointmentService.getList();
-			setAppointments(Array.isArray(apts) ? apts : apts.data || []);
+			const appointmentArray = Array.isArray(apts) ? apts : apts?.data ? apts.data : [];
+			setAppointments(appointmentArray);
 		} catch (error) {
+			console.error('Error fetching statistics:', error);
 			message.error('Lỗi khi tải thống kê!');
 		} finally {
 			setLoading(false);

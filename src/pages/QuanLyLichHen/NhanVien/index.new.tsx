@@ -11,7 +11,7 @@ const NhanVienPageNew: React.FC = () => {
 	const [isModalVisible, setIsModalVisible] = useState(false);
 	const [editingId, setEditingId] = useState<string | null>(null);
 	const [form] = Form.useForm();
-	
+
 	// REDUX
 	const dispatch = useDispatch();
 	const employees = useSelector((state: any) => state?.employee?.list || []);

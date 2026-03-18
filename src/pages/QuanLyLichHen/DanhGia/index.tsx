@@ -1,10 +1,26 @@
 import React, { useEffect, useState } from 'react';
-import { Table, Button, Modal, Form, Input, Rate, message, Card, Space, Tag, Avatar } from 'antd';
+import {
+	Table,
+	Button,
+	Modal,
+	Form,
+	Input,
+	Rate,
+	message,
+	Card,
+	Space,
+	Tag,
+	Avatar,
+	Divider,
+	Comment,
+	List,
+	Empty,
+} from 'antd';
 import { RatingService, AppointmentService } from '@/services/QuanLyLichHen';
 import type { Rating } from '@/types/lichhen';
 import type { ColumnsType } from 'antd/es/table';
 import dayjs from 'dayjs';
-import { EditOutlined, DeleteOutlined } from '@ant-design/icons';
+import { EditOutlined, DeleteOutlined, LikeOutlined, DislikeOutlined } from '@ant-design/icons';
 
 const DanhGiaPage: React.FC = () => {
 	const [ratings, setRatings] = useState<Rating[]>([]);
@@ -159,6 +175,76 @@ const DanhGiaPage: React.FC = () => {
 
 	return (
 		<div className='page-container'>
+			{/* Comments Feed Section */}
+			<Card
+				title='💬 Bình luận gần đây'
+				style={{ marginBottom: 24 }}
+				extra={
+					<Button type='primary' onClick={() => handleOpenModal()}>
+						Viết đánh giá
+					</Button>
+				}
+			>
+				{Array.isArray(ratings) && ratings.length > 0 ? (
+					<List
+						dataSource={ratings
+							.slice(0, 5)
+							.sort((a, b) => new Date(b.createdAt || '').getTime() - new Date(a.createdAt || '').getTime())}
+						renderItem={(item) => (
+							<List.Item key={item.id} style={{ borderBottom: '1px solid #f0f0f0', paddingBottom: 16 }}>
+								<List.Item.Meta
+									avatar={<Avatar>{employees.find((e) => e.id === item.employeeId)?.name?.charAt(0)}</Avatar>}
+									title={
+										<div>
+											<strong>
+												{appointments.find((a) => a.id === item.appointmentId)?.customerName || 'Khách hàng'}
+											</strong>
+											<Rate value={item.rating} disabled style={{ marginLeft: 12, fontSize: 14 }} />
+										</div>
+									}
+									description={
+										<div style={{ marginTop: 8 }}>
+											<p style={{ margin: '8px 0', color: '#595959' }}>{item.comment}</p>
+											{item.employeeResponse && (
+												<div
+													style={{
+														marginTop: 8,
+														padding: '8px',
+														backgroundColor: '#fafafa',
+														borderLeft: '3px solid #1890ff',
+													}}
+												>
+													<strong style={{ color: '#1890ff' }}>
+														Phản hồi từ {employees.find((e) => e.id === item.employeeId)?.name}:
+													</strong>
+													<p style={{ margin: '8px 0', color: '#595959' }}>{item.employeeResponse}</p>
+												</div>
+											)}
+											<small style={{ color: '#8c8c8c' }}>{dayjs(item.createdAt).format('DD/MM/YYYY HH:mm')}</small>
+										</div>
+									}
+								/>
+								<Space>
+									<Button type='text' size='small' icon={<EditOutlined />} onClick={() => handleOpenModal(item)} />
+									<Button
+										type='text'
+										danger
+										size='small'
+										icon={<DeleteOutlined />}
+										onClick={() => handleDelete(item.id)}
+									/>
+								</Space>
+							</List.Item>
+						)}
+					/>
+				) : (
+					<Empty description='Chưa có bình luận nào' />
+				)}
+			</Card>
+
+			<Divider />
+
+			{/* Ratings Table */}
 			<Card title='Quản lý Đánh giá & Nhận xét'>
 				<Table
 					columns={columns}
@@ -175,7 +261,7 @@ const DanhGiaPage: React.FC = () => {
 			</Card>
 
 			<Modal
-				title={editingId ? 'Cập nhật Đánh giá' : 'Thêm Đánh giá'}
+				title={editingId ? 'Cập nhật Đánh giá' : 'Thêm Đánh giá mới'}
 				visible={isModalVisible}
 				onOk={handleSubmit}
 				onCancel={handleCloseModal}
@@ -190,16 +276,16 @@ const DanhGiaPage: React.FC = () => {
 						label='Chọn lịch hẹn'
 						rules={[{ required: true, message: 'Vui lòng chọn lịch hẹn!' }]}
 					>
-						<select>
+						<select style={{ width: '100%', padding: 8, borderRadius: 4, border: '1px solid #d9d9d9' }}>
+							<option value=''>-- Chọn lịch hẹn --</option>
 							{Array.isArray(appointments) && appointments.length > 0 ? (
 								appointments.map((apt) => (
 									<option key={apt.id} value={apt.id}>
-										{apt.customerName} - {apt.appointmentDate} (
-										{Array.isArray(employees) && employees.find((e) => e.id === apt.employeeId)?.name})
+										{apt.customerName} - {apt.appointmentDate} ({employees.find((e) => e.id === apt.employeeId)?.name})
 									</option>
 								))
 							) : (
-								<option>Không có lịch hẹn nào</option>
+								<option disabled>Không có lịch hẹn hoàn thành</option>
 							)}
 						</select>
 					</Form.Item>
@@ -207,18 +293,22 @@ const DanhGiaPage: React.FC = () => {
 					<Form.Item
 						name='rating'
 						label='Đánh giá (sao)'
-						rules={[{ required: true, message: 'Vui lòng chọn đánh giá!' }]}
+						rules={[{ required: true, message: 'Vui lòng chọn mức đánh giá!' }]}
 					>
-						<Rate />
+						<Rate allowHalf tooltips={['Rất tệ', 'Tệ', 'Bình thường', 'Tốt', 'Rất tốt']} />
 					</Form.Item>
 
-					<Form.Item name='comment' label='Bình luận'>
-						<Input.TextArea placeholder='Nhập bình luận của bạn' rows={4} />
+					<Form.Item
+						name='comment'
+						label='Bình luận của bạn'
+						rules={[{ required: !editingId, message: 'Vui lòng nhập bình luận!' }]}
+					>
+						<Input.TextArea placeholder='Chia sẻ trải nghiệm của bạn...' rows={4} maxLength={500} showCount />
 					</Form.Item>
 
 					{editingId && (
-						<Form.Item name='employeeResponse' label='Phản hồi từ nhân viên'>
-							<Input.TextArea placeholder='Nhân viên phản hồi tại đây...' rows={3} />
+						<Form.Item name='employeeResponse' label='💬 Phản hồi từ nhân viên'>
+							<Input.TextArea placeholder='Nhân viên sẽ phản hồi tại đây...' rows={3} disabled={!editingId} />
 						</Form.Item>
 					)}
 				</Form>
