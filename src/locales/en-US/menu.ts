@@ -3,6 +3,7 @@ export default {
   'menu.account': 'Tài khoản',
   'menu.account.center': 'Cá nhân',
   'menu.Dashboard': 'Trang chủ',
+  'menu.VanBang': 'Diploma Registry',
   'menu.News': 'Tin tức',
 
   'menu.DanhMuc': 'Danh mục',

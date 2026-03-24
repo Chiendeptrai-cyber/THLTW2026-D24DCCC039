@@ -4,6 +4,7 @@ export default {
 	'menu.account.center': 'Cá nhân',
 	'menu.Dashboard': 'Trang chủ',
 	'menu.About': `Giới thiệu ${APP_CONFIG_TIEN_TO_TRUONG.toLowerCase()}`,
+	'menu.VanBang': 'Sổ văn bằng',
 	'menu.News': 'Tin tức',
 
 	'menu.DanhMuc': 'Danh mục',

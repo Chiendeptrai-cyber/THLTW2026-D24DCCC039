@@ -42,6 +42,12 @@
 		icon: 'OrderedListOutlined',
 		component: './TodoList',
 	},
+	{
+		path: '/van-bang',
+		name: 'VanBang',
+		icon: 'BookOutlined',
+		component: './VanBang',
+	},
 
 	// DANH MUC HE THONG
 	// {
