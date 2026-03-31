@@ -23,9 +23,9 @@ import {
 import { connect } from 'umi';
 import type { ColumnsType } from 'antd/lib/table';
 import moment from 'moment';
-import ApplicationModal from '../components/ApplicationModal';
-import ApproveRejectModal from '../components/ApproveRejectModal';
-import HistoryModal from '../components/HistoryModal';
+import ApplicationModal from './components/ApplicationModal';
+import ApproveRejectModal from './components/ApproveRejectModal';
+import HistoryModal from './components/HistoryModal';
 import type { RegistrationApplication, CauLacBoState } from '@/models/cauLacBo';
 
 interface RegistrationPageProps {
