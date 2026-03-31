@@ -181,13 +181,19 @@ const ClubListPage: React.FC<ClubListPageProps> = ({ cauLacBo = {}, dispatch }: 
         />
       </div>
 
-      <Table
-        columns={columns}
-        dataSource={filteredClubs}
-        loading={loading}
-        rowKey="id"
-        pagination={{ pageSize: 10 }}
-      />
+      {filteredClubs.length === 0 ? (
+        <div style={{ textAlign: 'center', padding: '40px' }}>
+          <p>Chưa có câu lạc bộ nào. Hãy thêm mới!</p>
+        </div>
+      ) : (
+        <Table
+          columns={columns}
+          dataSource={filteredClubs}
+          loading={loading}
+          rowKey="id"
+          pagination={{ pageSize: 10 }}
+        />
+      )}
 
       <ClubModal
         visible={visible}
