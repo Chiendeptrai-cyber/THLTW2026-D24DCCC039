@@ -44,7 +44,7 @@ const ChangeClubModal: React.FC<ChangeClubModalProps> = ({
   return (
     <Modal
       title={`Chuyển CLB cho ${selectedCount} thành viên`}
-      open={visible}
+      visible={visible}
       onCancel={onCancel}
       width={500}
       footer={null}

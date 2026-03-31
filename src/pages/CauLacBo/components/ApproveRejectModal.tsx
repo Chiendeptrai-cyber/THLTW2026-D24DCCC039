@@ -38,7 +38,7 @@ const ApproveRejectModal: React.FC<ApproveRejectModalProps> = ({ visible, action
   const okText = action === 'approve' ? 'Duyệt' : 'Từ chối';
 
   return (
-    <Modal title={title} open={visible} onCancel={onCancel} confirmLoading={loading} width={500} footer={null}>
+    <Modal title={title} visible={visible} onCancel={onCancel} confirmLoading={loading} width={500} footer={null}>
       <Form form={form} layout="vertical">
         <div style={{ marginBottom: 16 }}>
           <p>{`Bạn sắp ${action === 'approve' ? 'duyệt' : 'từ chối'} ${ids.length} đơn đăng ký.`}</p>

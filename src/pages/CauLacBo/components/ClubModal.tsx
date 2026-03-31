@@ -42,7 +42,7 @@ const ClubModal: React.FC<ClubModalProps> = ({ visible, title, initialData, onSu
   };
 
   return (
-    <Modal title={title} open={visible} onOk={() => form.submit()} onCancel={onCancel} confirmLoading={loading} width={700}>
+    <Modal title={title} visible={visible} onOk={() => form.submit()} onCancel={onCancel} confirmLoading={loading} width={700}>
       <Form form={form} layout="vertical" onFinish={handleSubmit}>
         <Form.Item label="Tên câu lạc bộ" name="name" rules={[{ required: true, message: 'Vui lòng nhập tên CLB' }]}>
           <Input placeholder="Nhập tên câu lạc bộ" />

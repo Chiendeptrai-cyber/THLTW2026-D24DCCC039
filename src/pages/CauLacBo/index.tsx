@@ -1,5 +1,5 @@
-import React from 'react';
-import { Tabs } from 'antd';
+import React, { Suspense } from 'react';
+import { Tabs, Spin } from 'antd';
 import ClubListPage from './ClubList';
 import RegistrationPage from './RegistrationList';
 import MemberPage from './MemberList';
@@ -10,26 +10,46 @@ const CauLacBoPage: React.FC = () => {
     {
       label: 'Danh sách CLB',
       key: 'clubs',
-      children: <ClubListPage />,
+      children: (
+        <Suspense fallback={<Spin />}>
+          <ClubListPage />
+        </Suspense>
+      ),
     },
     {
       label: 'Quản lý đơn đăng ký',
       key: 'applications',
-      children: <RegistrationPage />,
+      children: (
+        <Suspense fallback={<Spin />}>
+          <RegistrationPage />
+        </Suspense>
+      ),
     },
     {
       label: 'Quản lý thành viên',
       key: 'members',
-      children: <MemberPage />,
+      children: (
+        <Suspense fallback={<Spin />}>
+          <MemberPage />
+        </Suspense>
+      ),
     },
     {
       label: 'Báo cáo & Thống kê',
       key: 'statistics',
-      children: <StatisticsPage />,
+      children: (
+        <Suspense fallback={<Spin />}>
+          <StatisticsPage />
+        </Suspense>
+      ),
     },
   ];
 
-  return <Tabs items={items} />;
+  return (
+    <div style={{ padding: '20px' }}>
+      <Tabs items={items} defaultActiveKey="clubs" />
+    </div>
+  );
 };
 
 export default CauLacBoPage;

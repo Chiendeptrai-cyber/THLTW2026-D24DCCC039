@@ -53,7 +53,7 @@ const ApplicationModal: React.FC<ApplicationModalProps> = ({
   return (
     <Modal
       title={title}
-      open={visible}
+      visible={visible}
       onOk={() => form.submit()}
       onCancel={onCancel}
       confirmLoading={loading}
