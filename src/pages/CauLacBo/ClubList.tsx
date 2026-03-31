@@ -42,13 +42,23 @@ const ClubListPage: React.FC<ClubListPageProps> = ({ cauLacBo = {}, dispatch }: 
     console.log('🔍 ClubList - Redux cauLacBo:', cauLacBo);
     console.log('🔍 ClubList - clubs data:', clubs);
     console.log('🔍 ClubList - dispatch available:', !!dispatch);
+    console.log('🔍 ClubList - calling getClubs effect');
     dispatch?.({ type: 'cauLacBo/getClubs' });
   }, []);
 
-  const handleAddClub = () => {
-    setEditingClub(undefined);
-    setVisible(true);
-  };
+  return (
+    <div>
+      <h1>Test - Danh sách câu lạc bộ</h1>
+      <div style={{ marginTop: '20px', padding: '20px', background: '#f0f0f0' }}>
+        <p>Redux state: {JSON.stringify(cauLacBo)}</p>
+        <p>Clubs count: {clubs.length}</p>
+        <p>Loading: {loading ? 'true' : 'false'}</p>
+      </div>
+    </div>
+  );
+};
+
+export default connect(({ cauLacBo }: any) => ({ cauLacBo }))(ClubListPage);
 
   const handleEditClub = (club: Club) => {
     setEditingClub(club);

@@ -6,6 +6,8 @@ import MemberPage from './MemberList';
 import StatisticsPage from './Statistics';
 
 const CauLacBoPage: React.FC = () => {
+  console.log('🔍 CauLacBoPage - rendering');
+  
   const items = [
     {
       label: 'Danh sách CLB',
