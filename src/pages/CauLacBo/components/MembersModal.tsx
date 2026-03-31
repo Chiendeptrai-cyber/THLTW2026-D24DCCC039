@@ -54,7 +54,7 @@ const MembersModal: React.FC<MembersModalProps> = ({
   return (
     <Modal
       title={`Danh sách thành viên - ${clubName}`}
-      open={visible}
+      visible={visible}
       onCancel={onCancel}
       width={1000}
       footer={null}

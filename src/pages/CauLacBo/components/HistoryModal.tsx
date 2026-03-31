@@ -13,7 +13,7 @@ interface HistoryModalProps {
 
 const HistoryModal: React.FC<HistoryModalProps> = ({ visible, histories, onCancel, loading }) => {
   return (
-    <Modal title="Lịch sử thao tác" open={visible} onCancel={onCancel} width={600} footer={null}>
+    <Modal title="Lịch sử thao tác" visible={visible} onCancel={onCancel} width={600} footer={null}>
       <Spin spinning={loading}>
         {histories.length === 0 ? (
           <Empty description="Không có lịch sử nào" />
