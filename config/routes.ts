@@ -48,6 +48,12 @@
 		icon: 'BookOutlined',
 		component: './VanBang',
 	},
+	{
+		path: '/cau-lac-bo',
+		name: 'CauLacBo',
+		icon: 'TeamOutlined',
+		component: './CauLacBo',
+	},
 
 	// DANH MUC HE THONG
 	// {
