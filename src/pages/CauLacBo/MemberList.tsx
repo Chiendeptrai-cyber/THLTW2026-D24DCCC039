@@ -13,7 +13,7 @@ import {
 } from '@ant-design/icons';
 import { connect } from 'umi';
 import type { ColumnsType } from 'antd/lib/table';
-import ChangeClubModal from '../components/ChangeClubModal';
+import ChangeClubModal from './components/ChangeClubModal';
 import type { ClubMember, CauLacBoState, Club } from '@/models/cauLacBo';
 
 interface MemberPageProps {
