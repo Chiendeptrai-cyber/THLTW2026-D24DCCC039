@@ -87,9 +87,51 @@ let clubs: Club[] = [
     createdAt: '2020-01-15',
     updatedAt: '2020-01-15',
   },
+  {
+    id: 'club-2',
+    name: 'CLB Tiếng Anh',
+    avatar: 'https://via.placeholder.com/100?text=English',
+    foundedDate: '2019-05-20',
+    description: '<p>Câu lạc bộ ngoại ngữ - Tiếng Anh</p>',
+    leader: 'Trần Thị B',
+    isActive: true,
+    createdAt: '2019-05-20',
+    updatedAt: '2019-05-20',
+  },
 ];
 
-let applications: RegistrationApplication[] = [];
+let applications: RegistrationApplication[] = [
+  {
+    id: 'app-1',
+    fullName: 'Phạm Văn C',
+    email: 'phamvanccc@email.com',
+    phone: '0123456789',
+    gender: 'Nam',
+    address: 'Hà Nội',
+    specialty: 'Lập trình Web',
+    clubId: 'club-1',
+    registrationReason: 'Yêu thích lập trình và muốn học hỏi từ các senior',
+    status: 'Pending',
+    actionHistories: [],
+    createdAt: new Date().toISOString(),
+    updatedAt: new Date().toISOString(),
+  },
+  {
+    id: 'app-2',
+    fullName: 'Đặng Thị D',
+    email: 'dangthid@email.com',
+    phone: '0987654321',
+    gender: 'Nữ',
+    address: 'TP.HCM',
+    specialty: 'Ngoại ngữ',
+    clubId: 'club-2',
+    registrationReason: 'Muốn cải thiện kỹ năng tiếng Anh',
+    status: 'Approved',
+    actionHistories: [],
+    createdAt: new Date().toISOString(),
+    updatedAt: new Date().toISOString(),
+  },
+];
 
 // Club Service
 const clubService = {
