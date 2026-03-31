@@ -20,7 +20,7 @@ const StatisticsPage: React.FC<StatisticsPageProps> = ({ cauLacBo = {}, dispatch
 
   useEffect(() => {
     dispatch?.({ type: 'cauLacBo/getStatistics' });
-  }, [dispatch]);
+  }, []);
 
   if (loading || !statistics) {
     return <Spin spinning={loading} />;

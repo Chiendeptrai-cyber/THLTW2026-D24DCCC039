@@ -41,8 +41,9 @@ const ClubListPage: React.FC<ClubListPageProps> = ({ cauLacBo = {}, dispatch }: 
   useEffect(() => {
     console.log('🔍 ClubList - Redux cauLacBo:', cauLacBo);
     console.log('🔍 ClubList - clubs data:', clubs);
+    console.log('🔍 ClubList - dispatch available:', !!dispatch);
     dispatch?.({ type: 'cauLacBo/getClubs' });
-  }, [dispatch]);
+  }, []);
 
   const handleAddClub = () => {
     setEditingClub(undefined);
