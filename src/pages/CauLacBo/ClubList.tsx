@@ -39,6 +39,8 @@ const ClubListPage: React.FC<ClubListPageProps> = ({ cauLacBo = {}, dispatch }: 
   const { clubs = [], loading = false, members = [] } = cauLacBo;
 
   useEffect(() => {
+    console.log('🔍 ClubList - Redux cauLacBo:', cauLacBo);
+    console.log('🔍 ClubList - clubs data:', clubs);
     dispatch?.({ type: 'cauLacBo/getClubs' });
   }, [dispatch]);
 
@@ -179,6 +181,9 @@ const ClubListPage: React.FC<ClubListPageProps> = ({ cauLacBo = {}, dispatch }: 
           onChange={(e) => setSearchText(e.target.value)}
           style={{ width: 300 }}
         />
+        <div style={{ marginTop: 8, fontSize: 12, color: '#999' }}>
+          Debug: {clubs.length} clubs loaded | Status: {loading ? 'Loading...' : 'Ready'}
+        </div>
       </div>
 
       {filteredClubs.length === 0 ? (
