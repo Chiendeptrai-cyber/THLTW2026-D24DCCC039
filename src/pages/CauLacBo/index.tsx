@@ -1,4 +1,4 @@
-import React, { Suspense, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { Tabs, Spin } from 'antd';
 import ClubListPage from './ClubList';
 import RegistrationPage from './RegistrationList';
@@ -17,38 +17,22 @@ const CauLacBoPage: React.FC = () => {
     {
       label: 'Danh sách CLB',
       key: 'clubs',
-      children: (
-        <Suspense fallback={<Spin />}>
-          <ClubListPage />
-        </Suspense>
-      ),
+      children: <ClubListPage />,
     },
     {
       label: 'Quản lý đơn đăng ký',
       key: 'applications',
-      children: (
-        <Suspense fallback={<Spin />}>
-          <RegistrationPage />
-        </Suspense>
-      ),
+      children: <RegistrationPage />,
     },
     {
       label: 'Quản lý thành viên',
       key: 'members',
-      children: (
-        <Suspense fallback={<Spin />}>
-          <MemberPage />
-        </Suspense>
-      ),
+      children: <MemberPage />,
     },
     {
       label: 'Báo cáo & Thống kê',
       key: 'statistics',
-      children: (
-        <Suspense fallback={<Spin />}>
-          <StatisticsPage />
-        </Suspense>
-      ),
+      children: <StatisticsPage />,
     },
   ];
 
