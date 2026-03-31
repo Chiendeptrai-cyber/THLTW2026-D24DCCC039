@@ -98,6 +98,19 @@ const ClubListPage: React.FC<ClubListPageProps> = ({ cauLacBo = {}, dispatch }: 
 
   const columns: ColumnsType<Club> = [
     {
+      title: 'Ảnh đại diện',
+      dataIndex: 'avatar',
+      key: 'avatar',
+      width: 100,
+      render: (avatar) => (
+        <img 
+          src={avatar || 'https://via.placeholder.com/80'} 
+          alt="avatar"
+          style={{ width: 60, height: 60, borderRadius: '4px' }}
+        />
+      ),
+    },
+    {
       title: 'Tên câu lạc bộ',
       dataIndex: 'name',
       key: 'name',
