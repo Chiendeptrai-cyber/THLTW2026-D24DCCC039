@@ -1,4 +1,4 @@
-import React, { Suspense } from 'react';
+import React, { Suspense, useEffect } from 'react';
 import { Tabs, Spin } from 'antd';
 import ClubListPage from './ClubList';
 import RegistrationPage from './RegistrationList';
@@ -6,7 +6,12 @@ import MemberPage from './MemberList';
 import StatisticsPage from './Statistics';
 
 const CauLacBoPage: React.FC = () => {
+  useEffect(() => {
+    console.log('🔍 CauLacBoPage - useEffect mount');
+  }, []);
+
   console.log('🔍 CauLacBoPage - rendering');
+  console.log('🔍 Creating tabs items');
   
   const items = [
     {
@@ -46,6 +51,8 @@ const CauLacBoPage: React.FC = () => {
       ),
     },
   ];
+
+  console.log('🔍 CauLacBoPage - about to render Tabs with items:', items.length);
 
   return (
     <div style={{ padding: '20px' }}>
