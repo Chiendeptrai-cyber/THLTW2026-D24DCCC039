@@ -32,7 +32,7 @@ const MemberPage: React.FC<MemberPageProps> = ({ cauLacBo = {}, dispatch }) => {
   useEffect(() => {
     dispatch?.({ type: 'cauLacBo/getClubs' });
     dispatch?.({ type: 'cauLacBo/getApplications' });
-  }, [dispatch]);
+  }, []);
 
   useEffect(() => {
     if (clubs.length > 0 && !selectedClubId) {

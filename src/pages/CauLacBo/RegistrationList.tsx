@@ -49,7 +49,7 @@ const RegistrationPage: React.FC<RegistrationPageProps> = ({ cauLacBo = {}, disp
   useEffect(() => {
     dispatch?.({ type: 'cauLacBo/getApplications' });
     dispatch?.({ type: 'cauLacBo/getClubs' });
-  }, [dispatch]);
+  }, []);
 
   const handleAddApplication = () => {
     setEditingApp(undefined);
