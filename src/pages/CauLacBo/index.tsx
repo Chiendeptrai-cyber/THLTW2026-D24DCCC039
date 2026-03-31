@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { Tabs, Spin } from 'antd';
-import ClubListPage from './ClubList';
+import SimpleTest from './SimpleTest';
 import RegistrationPage from './RegistrationList';
 import MemberPage from './MemberList';
 import StatisticsPage from './Statistics';
@@ -17,7 +17,7 @@ const CauLacBoPage: React.FC = () => {
     {
       label: 'Danh sách CLB',
       key: 'clubs',
-      children: <ClubListPage />,
+      children: <SimpleTest />,
     },
     {
       label: 'Quản lý đơn đăng ký',
