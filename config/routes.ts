@@ -92,9 +92,6 @@
 		hideInMenu: true,
 	},
 	{
-		path: '/',
-	},
-	{
 		path: '/403',
 		component: './exception/403/403Page',
 		layout: false,
@@ -103,6 +100,10 @@
 		path: '/hold-on',
 		component: './exception/DangCapNhat',
 		layout: false,
+	},
+	{
+		path: '/',
+		redirect: '/dashboard',
 	},
 	{
 		component: './exception/404',
