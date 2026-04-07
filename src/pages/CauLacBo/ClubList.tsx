@@ -39,9 +39,11 @@ const ClubListPage: React.FC<ClubListPageProps> = ({ cauLacBo = {}, dispatch }: 
   const { clubs = [], loading = false, members = [] } = cauLacBo;
 
   useEffect(() => {
-    console.log('🔍 ClubList - useEffect triggered, calling getClubs');
+    console.log('🔍 ClubList - Redux cauLacBo:', cauLacBo);
+    console.log('🔍 ClubList - clubs data:', clubs);
+    console.log('🔍 ClubList - dispatch available:', !!dispatch);
     dispatch?.({ type: 'cauLacBo/getClubs' });
-  }, [dispatch]);
+  }, []);
 
   const handleAddClub = () => {
     setEditingClub(undefined);
@@ -84,6 +86,7 @@ const ClubListPage: React.FC<ClubListPageProps> = ({ cauLacBo = {}, dispatch }: 
   const handleViewMembers = (club: Club) => {
     setSelectedClubForMembers(club);
     setMembersLoading(true);
+    // Filter members by club
     const filteredMembers = members.filter((m) => m.clubId === club.id);
     setClubMembers(filteredMembers);
     setMembersLoading(false);
@@ -97,19 +100,6 @@ const ClubListPage: React.FC<ClubListPageProps> = ({ cauLacBo = {}, dispatch }: 
   );
 
   const columns: ColumnsType<Club> = [
-    {
-      title: 'Ảnh đại diện',
-      dataIndex: 'avatar',
-      key: 'avatar',
-      width: 100,
-      render: (avatar) => (
-        <img 
-          src={avatar || 'https://via.placeholder.com/80'} 
-          alt="avatar"
-          style={{ width: 60, height: 60, borderRadius: '4px' }}
-        />
-      ),
-    },
     {
       title: 'Tên câu lạc bộ',
       dataIndex: 'name',
@@ -192,9 +182,12 @@ const ClubListPage: React.FC<ClubListPageProps> = ({ cauLacBo = {}, dispatch }: 
           onChange={(e) => setSearchText(e.target.value)}
           style={{ width: 300 }}
         />
+        <div style={{ marginTop: 8, fontSize: 12, color: '#999' }}>
+          Debug: {clubs.length} clubs loaded | Status: {loading ? 'Loading...' : 'Ready'}
+        </div>
       </div>
 
-      {clubs.length === 0 ? (
+      {filteredClubs.length === 0 ? (
         <div style={{ textAlign: 'center', padding: '40px' }}>
           <p>Chưa có câu lạc bộ nào. Hãy thêm mới!</p>
         </div>

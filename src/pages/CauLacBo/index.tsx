@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { Suspense } from 'react';
 import { Tabs, Spin } from 'antd';
 import ClubListPage from './ClubList';
 import RegistrationPage from './RegistrationList';
@@ -6,38 +6,48 @@ import MemberPage from './MemberList';
 import StatisticsPage from './Statistics';
 
 const CauLacBoPage: React.FC = () => {
-  const [activeKey, setActiveKey] = useState('clubs');
-
-  const tabItems = [
+  const items = [
     {
-      key: 'clubs',
       label: 'Danh sách CLB',
-      children: <ClubListPage />,
+      key: 'clubs',
+      children: (
+        <Suspense fallback={<Spin />}>
+          <ClubListPage />
+        </Suspense>
+      ),
     },
     {
-      key: 'applications',
       label: 'Quản lý đơn đăng ký',
-      children: <RegistrationPage />,
+      key: 'applications',
+      children: (
+        <Suspense fallback={<Spin />}>
+          <RegistrationPage />
+        </Suspense>
+      ),
     },
     {
-      key: 'members',
       label: 'Quản lý thành viên',
-      children: <MemberPage />,
+      key: 'members',
+      children: (
+        <Suspense fallback={<Spin />}>
+          <MemberPage />
+        </Suspense>
+      ),
     },
     {
-      key: 'statistics',
       label: 'Báo cáo & Thống kê',
-      children: <StatisticsPage />,
+      key: 'statistics',
+      children: (
+        <Suspense fallback={<Spin />}>
+          <StatisticsPage />
+        </Suspense>
+      ),
     },
   ];
 
   return (
     <div style={{ padding: '20px' }}>
-      <Tabs 
-        items={tabItems}
-        activeKey={activeKey}
-        onChange={setActiveKey}
-      />
+      <Tabs items={items} defaultActiveKey="clubs" />
     </div>
   );
 };
