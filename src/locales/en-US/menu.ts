@@ -12,4 +12,11 @@ export default {
   'menu.RandomUser': 'Random Users',
   'menu.TodoList': 'Todo List',
   'menu.CauLacBo': 'Club Management',
+  'menu.DuLich': 'Travel',
+  'menu.DuLich.KhamPha': 'Explore Destinations',
+  'menu.DuLich.LichTrinh': 'Travel Itinerary',
+  'menu.DuLich.NganSach': 'Budget Management',
+  'menu.DuLich.Admin': 'Admin',
+  'menu.DuLich.Admin.QuanLyDiemDen': 'Manage Destinations',
+  'menu.DuLich.Admin.ThongKe': 'Statistics',
 };

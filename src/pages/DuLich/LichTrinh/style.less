@@ -1,0 +1,67 @@
+.lich-trinh-page {
+  .sidebar-card {
+    .lt-item {
+      cursor: pointer;
+      border-radius: 8px;
+      padding: 4px 8px;
+      transition: background 0.2s;
+
+      &:hover {
+        background: #f0f5ff;
+      }
+
+      &.active {
+        background: #e6f7ff;
+        border-left: 3px solid #1890ff;
+      }
+    }
+  }
+
+  .budget-summary-card {
+    .stat-item {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+
+      .stat-value {
+        font-size: 16px;
+        font-weight: 600;
+      }
+    }
+  }
+
+  .days-collapse {
+    .ant-collapse-item {
+      margin-bottom: 8px;
+      border-radius: 8px !important;
+      overflow: hidden;
+    }
+
+    .dd-item {
+      border-radius: 6px;
+      padding: 8px;
+
+      &:hover {
+        background: #fafafa;
+      }
+    }
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .lich-trinh-page {
+    .budget-summary-card {
+      .stat-item {
+        .stat-value {
+          font-size: 14px;
+        }
+      }
+    }
+
+    .dd-item {
+      .ant-list-item-action {
+        margin-top: 8px;
+      }
+    }
+  }
+}

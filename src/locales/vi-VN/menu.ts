@@ -12,4 +12,11 @@ export default {
 	'menu.RandomUser': 'Tài khoản ngẫu nhiên',
 	'menu.TodoList': 'Danh sách công việc',
 	'menu.CauLacBo': 'Câu lạc bộ',
+	'menu.DuLich': 'Du lịch',
+	'menu.DuLich.KhamPha': 'Khám phá điểm đến',
+	'menu.DuLich.LichTrinh': 'Lịch trình du lịch',
+	'menu.DuLich.NganSach': 'Quản lý ngân sách',
+	'menu.DuLich.Admin': 'Quản trị',
+	'menu.DuLich.Admin.QuanLyDiemDen': 'Quản lý điểm đến',
+	'menu.DuLich.Admin.ThongKe': 'Thống kê',
 };

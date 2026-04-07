@@ -1,0 +1,68 @@
+.thong-ke-page {
+  .page-header {
+    text-align: center;
+    margin-bottom: 24px;
+
+    h1 {
+      font-size: 28px;
+      margin-bottom: 4px;
+    }
+
+    p {
+      color: #888;
+      font-size: 15px;
+    }
+  }
+
+  .stat-card {
+    border-radius: 10px;
+    text-align: center;
+    transition: transform 0.2s;
+    border-left: 4px solid transparent;
+
+    &:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+    }
+
+    &.stat-blue {
+      border-left-color: #1890ff;
+    }
+
+    &.stat-green {
+      border-left-color: #52c41a;
+    }
+
+    &.stat-orange {
+      border-left-color: #fa8c16;
+    }
+
+    &.stat-purple {
+      border-left-color: #722ed1;
+    }
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .thong-ke-page {
+    .page-header h1 {
+      font-size: 22px;
+    }
+
+    .stat-card .ant-statistic-content-value {
+      font-size: 16px !important;
+    }
+  }
+}
+
+@media screen and (max-width: 576px) {
+  .thong-ke-page {
+    .page-header h1 {
+      font-size: 20px;
+    }
+
+    .stat-card .ant-statistic-content-value {
+      font-size: 14px !important;
+    }
+  }
+}

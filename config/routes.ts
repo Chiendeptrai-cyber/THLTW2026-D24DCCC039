@@ -54,6 +54,48 @@
 		icon: 'TeamOutlined',
 		component: './CauLacBo',
 	},
+	{
+		path: '/du-lich',
+		name: 'DuLich',
+		icon: 'CompassOutlined',
+		routes: [
+			{
+				path: '/du-lich/kham-pha',
+				name: 'KhamPha',
+				icon: 'SearchOutlined',
+				component: './DuLich/KhamPha',
+			},
+			{
+				path: '/du-lich/lich-trinh',
+				name: 'LichTrinh',
+				icon: 'ScheduleOutlined',
+				component: './DuLich/LichTrinh',
+			},
+			{
+				path: '/du-lich/ngan-sach',
+				name: 'NganSach',
+				icon: 'DollarOutlined',
+				component: './DuLich/NganSach',
+			},
+			{
+				path: '/du-lich/admin',
+				name: 'Admin',
+				icon: 'SettingOutlined',
+				routes: [
+					{
+						path: '/du-lich/admin/diem-den',
+						name: 'QuanLyDiemDen',
+						component: './DuLich/Admin/QuanLyDiemDen',
+					},
+					{
+						path: '/du-lich/admin/thong-ke',
+						name: 'ThongKe',
+						component: './DuLich/Admin/ThongKe',
+					},
+				],
+			},
+		],
+	},
 
 	// DANH MUC HE THONG
 	// {
