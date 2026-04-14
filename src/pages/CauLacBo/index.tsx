@@ -1,5 +1,6 @@
-import React, { Suspense } from 'react';
-import { Tabs, Spin } from 'antd';
+import React from 'react';
+import { Tabs, Card } from 'antd';
+import { TeamOutlined, FormOutlined, UserOutlined, BarChartOutlined } from '@ant-design/icons';
 import ClubListPage from './ClubList';
 import RegistrationPage from './RegistrationList';
 import MemberPage from './MemberList';
@@ -8,46 +9,52 @@ import StatisticsPage from './Statistics';
 const CauLacBoPage: React.FC = () => {
   const items = [
     {
-      label: 'Danh sách CLB',
+      label: (
+        <span>
+          <TeamOutlined />
+          Danh sách CLB
+        </span>
+      ),
       key: 'clubs',
-      children: (
-        <Suspense fallback={<Spin />}>
-          <ClubListPage />
-        </Suspense>
-      ),
+      children: <ClubListPage />,
     },
     {
-      label: 'Quản lý đơn đăng ký',
+      label: (
+        <span>
+          <FormOutlined />
+          Đơn đăng ký
+        </span>
+      ),
       key: 'applications',
-      children: (
-        <Suspense fallback={<Spin />}>
-          <RegistrationPage />
-        </Suspense>
-      ),
+      children: <RegistrationPage />,
     },
     {
-      label: 'Quản lý thành viên',
+      label: (
+        <span>
+          <UserOutlined />
+          Thành viên
+        </span>
+      ),
       key: 'members',
-      children: (
-        <Suspense fallback={<Spin />}>
-          <MemberPage />
-        </Suspense>
-      ),
+      children: <MemberPage />,
     },
     {
-      label: 'Báo cáo & Thống kê',
-      key: 'statistics',
-      children: (
-        <Suspense fallback={<Spin />}>
-          <StatisticsPage />
-        </Suspense>
+      label: (
+        <span>
+          <BarChartOutlined />
+          Báo cáo & Thống kê
+        </span>
       ),
+      key: 'statistics',
+      children: <StatisticsPage />,
     },
   ];
 
   return (
-    <div style={{ padding: '20px' }}>
-      <Tabs items={items} defaultActiveKey="clubs" />
+    <div style={{ padding: 24 }}>
+      <Card>
+        <Tabs items={items} defaultActiveKey="clubs" size="large" />
+      </Card>
     </div>
   );
 };

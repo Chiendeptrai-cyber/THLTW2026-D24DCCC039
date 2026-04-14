@@ -1,186 +1,262 @@
 import type { Club, RegistrationApplication, ActionHistory, ClubMember, ClubStatistics, ApplicationStatus } from '../types';
 
-// Mock data
 let clubs: Club[] = [
   {
     id: 'club-1',
     name: 'CLB Lập trình',
-    avatar: 'https://via.placeholder.com/100?text=Programming',
+    avatar: 'https://via.placeholder.com/100?text=LT',
     foundedDate: '2020-01-15',
-    description: '<p>Câu lạc bộ dành cho những bạn yêu thích lập trình</p>',
+    description: '<p>Câu lạc bộ dành cho những bạn yêu thích <strong>lập trình</strong> và công nghệ thông tin.</p>',
     leader: 'Nguyễn Văn A',
     isActive: true,
-    createdAt: '2020-01-15',
-    updatedAt: '2020-01-15',
+    createdAt: '2020-01-15T00:00:00.000Z',
+    updatedAt: '2020-01-15T00:00:00.000Z',
+  },
+  {
+    id: 'club-2',
+    name: 'CLB Tiếng Anh',
+    avatar: 'https://via.placeholder.com/100?text=TA',
+    foundedDate: '2019-05-20',
+    description: '<p>Câu lạc bộ ngoại ngữ - <em>Tiếng Anh</em> giao tiếp và học thuật.</p>',
+    leader: 'Trần Thị B',
+    isActive: true,
+    createdAt: '2019-05-20T00:00:00.000Z',
+    updatedAt: '2019-05-20T00:00:00.000Z',
+  },
+  {
+    id: 'club-3',
+    name: 'CLB Âm nhạc',
+    avatar: 'https://via.placeholder.com/100?text=AN',
+    foundedDate: '2021-09-01',
+    description: '<p>Câu lạc bộ dành cho những bạn đam mê <strong>âm nhạc</strong>, ca hát và nhạc cụ.</p>',
+    leader: 'Lê Văn C',
+    isActive: true,
+    createdAt: '2021-09-01T00:00:00.000Z',
+    updatedAt: '2021-09-01T00:00:00.000Z',
+  },
+  {
+    id: 'club-4',
+    name: 'CLB Thể thao',
+    avatar: 'https://via.placeholder.com/100?text=TT',
+    foundedDate: '2018-03-10',
+    description: '<p>Câu lạc bộ thể thao, rèn luyện sức khỏe và tinh thần đồng đội.</p>',
+    leader: 'Phạm Thị D',
+    isActive: false,
+    createdAt: '2018-03-10T00:00:00.000Z',
+    updatedAt: '2018-03-10T00:00:00.000Z',
   },
 ];
 
-let applications: RegistrationApplication[] = [];
-let actionHistories: ActionHistory[] = [];
+let applications: RegistrationApplication[] = [
+  {
+    id: 'app-1',
+    fullName: 'Phạm Văn E',
+    email: 'phamvane@email.com',
+    phone: '0901234567',
+    gender: 'Nam',
+    address: 'Hà Nội',
+    specialty: 'Lập trình Web',
+    clubId: 'club-1',
+    registrationReason: 'Yêu thích lập trình và muốn học hỏi từ các anh chị senior',
+    status: 'Pending',
+    actionHistories: [],
+    createdAt: '2025-04-01T08:00:00.000Z',
+    updatedAt: '2025-04-01T08:00:00.000Z',
+  },
+  {
+    id: 'app-2',
+    fullName: 'Đặng Thị F',
+    email: 'dangthif@email.com',
+    phone: '0912345678',
+    gender: 'Nữ',
+    address: 'TP. Hồ Chí Minh',
+    specialty: 'Ngoại ngữ',
+    clubId: 'club-2',
+    registrationReason: 'Muốn cải thiện kỹ năng tiếng Anh giao tiếp',
+    status: 'Approved',
+    actionHistories: [
+      { id: 'history-1', userId: 'admin-1', userName: 'Admin', action: 'Approved', timestamp: '2025-04-02T10:30:00.000Z', applicationId: 'app-2' },
+    ],
+    createdAt: '2025-03-28T09:00:00.000Z',
+    updatedAt: '2025-04-02T10:30:00.000Z',
+  },
+  {
+    id: 'app-3',
+    fullName: 'Hoàng Văn G',
+    email: 'hoangvang@email.com',
+    phone: '0923456789',
+    gender: 'Nam',
+    address: 'Đà Nẵng',
+    specialty: 'Guitar, Piano',
+    clubId: 'club-3',
+    registrationReason: 'Đam mê âm nhạc từ nhỏ, muốn phát triển thêm',
+    status: 'Rejected',
+    rejectionReason: 'Chưa đủ điều kiện về thời gian tham gia',
+    actionHistories: [
+      { id: 'history-2', userId: 'admin-1', userName: 'Admin', action: 'Rejected', timestamp: '2025-04-03T14:00:00.000Z', reason: 'Chưa đủ điều kiện về thời gian tham gia', applicationId: 'app-3' },
+    ],
+    createdAt: '2025-03-30T11:00:00.000Z',
+    updatedAt: '2025-04-03T14:00:00.000Z',
+  },
+  {
+    id: 'app-4',
+    fullName: 'Nguyễn Thị H',
+    email: 'nguyenthih@email.com',
+    phone: '0934567890',
+    gender: 'Nữ',
+    address: 'Hải Phòng',
+    specialty: 'Bóng rổ',
+    clubId: 'club-4',
+    registrationReason: 'Muốn rèn luyện thể thao cùng các bạn',
+    status: 'Pending',
+    actionHistories: [],
+    createdAt: '2025-04-04T07:30:00.000Z',
+    updatedAt: '2025-04-04T07:30:00.000Z',
+  },
+  {
+    id: 'app-5',
+    fullName: 'Trần Văn I',
+    email: 'tranvani@email.com',
+    phone: '0945678901',
+    gender: 'Nam',
+    address: 'Huế',
+    specialty: 'React, NodeJS',
+    clubId: 'club-1',
+    registrationReason: 'Muốn nâng cao kỹ năng lập trình fullstack',
+    status: 'Approved',
+    actionHistories: [
+      { id: 'history-3', userId: 'admin-1', userName: 'Admin', action: 'Approved', timestamp: '2025-04-05T09:00:00.000Z', applicationId: 'app-5' },
+    ],
+    createdAt: '2025-04-03T15:00:00.000Z',
+    updatedAt: '2025-04-05T09:00:00.000Z',
+  },
+  {
+    id: 'app-6',
+    fullName: 'Lê Thị K',
+    email: 'lethik@email.com',
+    phone: '0956789012',
+    gender: 'Nữ',
+    address: 'Cần Thơ',
+    specialty: 'IELTS, TOEIC',
+    clubId: 'club-2',
+    registrationReason: 'Chuẩn bị thi IELTS, muốn luyện tập cùng nhóm',
+    status: 'Pending',
+    actionHistories: [],
+    createdAt: '2025-04-06T10:00:00.000Z',
+    updatedAt: '2025-04-06T10:00:00.000Z',
+  },
+];
 
-// Club Service
 export const clubService = {
-  // Get all clubs
-  getClubs: async () => {
-    return Promise.resolve(clubs);
-  },
+  getClubs: async (): Promise<Club[]> => [...clubs],
 
-  // Get club by id
-  getClubById: async (id: string) => {
-    return Promise.resolve(clubs.find((c) => c.id === id));
-  },
+  getClubById: async (id: string): Promise<Club | undefined> => clubs.find((c) => c.id === id),
 
-  // Create club
-  createClub: async (club: Omit<Club, 'id' | 'createdAt' | 'updatedAt'>) => {
-    const newClub: Club = {
-      ...club,
-      id: `club-${Date.now()}`,
-      createdAt: new Date().toISOString(),
-      updatedAt: new Date().toISOString(),
-    };
+  createClub: async (club: Omit<Club, 'id' | 'createdAt' | 'updatedAt'>): Promise<Club> => {
+    const newClub: Club = { ...club, id: `club-${Date.now()}`, createdAt: new Date().toISOString(), updatedAt: new Date().toISOString() };
     clubs.push(newClub);
-    return Promise.resolve(newClub);
+    return newClub;
   },
 
-  // Update club
-  updateClub: async (id: string, updates: Partial<Club>) => {
-    const index = clubs.findIndex((c) => c.id === id);
-    if (index !== -1) {
-      clubs[index] = {
-        ...clubs[index],
-        ...updates,
-        updatedAt: new Date().toISOString(),
-      };
-      return Promise.resolve(clubs[index]);
-    }
-    return Promise.reject(new Error('Club not found'));
+  updateClub: async (id: string, updates: Partial<Club>): Promise<Club> => {
+    const idx = clubs.findIndex((c) => c.id === id);
+    if (idx === -1) throw new Error('Club not found');
+    clubs[idx] = { ...clubs[idx], ...updates, updatedAt: new Date().toISOString() };
+    return clubs[idx];
   },
 
-  // Delete club
-  deleteClub: async (id: string) => {
+  deleteClub: async (id: string): Promise<void> => {
     clubs = clubs.filter((c) => c.id !== id);
-    return Promise.resolve();
   },
 };
 
-// Registration Application Service
 export const applicationService = {
-  // Get all applications
-  getApplications: async () => {
-    return Promise.resolve(applications);
-  },
+  getApplications: async (): Promise<RegistrationApplication[]> => [...applications],
 
-  // Get applications by status
-  getApplicationsByStatus: async (status: ApplicationStatus) => {
-    return Promise.resolve(applications.filter((a) => a.status === status));
-  },
+  getApplicationsByClub: async (clubId: string): Promise<RegistrationApplication[]> => applications.filter((a) => a.clubId === clubId),
 
-  // Get applications by club
-  getApplicationsByClub: async (clubId: string) => {
-    return Promise.resolve(applications.filter((a) => a.clubId === clubId));
-  },
-
-  // Create application
-  createApplication: async (application: Omit<RegistrationApplication, 'id' | 'createdAt' | 'updatedAt' | 'actionHistories'>) => {
-    const newApplication: RegistrationApplication = {
-      ...application,
+  createApplication: async (data: Omit<RegistrationApplication, 'id' | 'createdAt' | 'updatedAt' | 'actionHistories' | 'status'>): Promise<RegistrationApplication> => {
+    const newApp: RegistrationApplication = {
+      ...data,
       id: `app-${Date.now()}`,
+      status: 'Pending',
       actionHistories: [],
       createdAt: new Date().toISOString(),
       updatedAt: new Date().toISOString(),
     };
-    applications.push(newApplication);
-    return Promise.resolve(newApplication);
+    applications.push(newApp);
+    return newApp;
   },
 
-  // Update application
-  updateApplication: async (id: string, updates: Partial<RegistrationApplication>) => {
-    const index = applications.findIndex((a) => a.id === id);
-    if (index !== -1) {
-      applications[index] = {
-        ...applications[index],
-        ...updates,
-        updatedAt: new Date().toISOString(),
-      };
-      return Promise.resolve(applications[index]);
-    }
-    return Promise.reject(new Error('Application not found'));
+  updateApplication: async (id: string, updates: Partial<RegistrationApplication>): Promise<RegistrationApplication> => {
+    const idx = applications.findIndex((a) => a.id === id);
+    if (idx === -1) throw new Error('Application not found');
+    applications[idx] = { ...applications[idx], ...updates, updatedAt: new Date().toISOString() };
+    return applications[idx];
   },
 
-  // Delete application
-  deleteApplication: async (id: string) => {
+  deleteApplication: async (id: string): Promise<void> => {
     applications = applications.filter((a) => a.id !== id);
-    return Promise.resolve();
   },
 
-  // Approve application
-  approveApplication: async (id: string, adminName: string = 'Admin') => {
-    const index = applications.findIndex((a) => a.id === id);
-    if (index !== -1) {
-      const history: ActionHistory = {
-        id: `history-${Date.now()}`,
-        userId: 'admin-1',
-        userName: adminName,
-        action: 'Approved',
-        timestamp: new Date().toISOString(),
-        applicationId: id,
-      };
-      applications[index].actionHistories.push(history);
-      applications[index].status = 'Approved';
-      applications[index].updatedAt = new Date().toISOString();
-      return Promise.resolve(applications[index]);
-    }
-    return Promise.reject(new Error('Application not found'));
+  approveApplication: async (id: string, adminName: string = 'Admin'): Promise<RegistrationApplication> => {
+    const idx = applications.findIndex((a) => a.id === id);
+    if (idx === -1) throw new Error('Application not found');
+    const history: ActionHistory = {
+      id: `history-${Date.now()}-${Math.random().toString(36).substr(2, 5)}`,
+      userId: 'admin-1',
+      userName: adminName,
+      action: 'Approved',
+      timestamp: new Date().toISOString(),
+      applicationId: id,
+    };
+    applications[idx].actionHistories.push(history);
+    applications[idx].status = 'Approved';
+    applications[idx].updatedAt = new Date().toISOString();
+    return { ...applications[idx] };
   },
 
-  // Reject application
-  rejectApplication: async (id: string, reason: string, adminName: string = 'Admin') => {
-    const index = applications.findIndex((a) => a.id === id);
-    if (index !== -1) {
-      const history: ActionHistory = {
-        id: `history-${Date.now()}`,
-        userId: 'admin-1',
-        userName: adminName,
-        action: 'Rejected',
-        timestamp: new Date().toISOString(),
-        reason,
-        applicationId: id,
-      };
-      applications[index].actionHistories.push(history);
-      applications[index].status = 'Rejected';
-      applications[index].rejectionReason = reason;
-      applications[index].updatedAt = new Date().toISOString();
-      return Promise.resolve(applications[index]);
-    }
-    return Promise.reject(new Error('Application not found'));
+  rejectApplication: async (id: string, reason: string, adminName: string = 'Admin'): Promise<RegistrationApplication> => {
+    const idx = applications.findIndex((a) => a.id === id);
+    if (idx === -1) throw new Error('Application not found');
+    const history: ActionHistory = {
+      id: `history-${Date.now()}-${Math.random().toString(36).substr(2, 5)}`,
+      userId: 'admin-1',
+      userName: adminName,
+      action: 'Rejected',
+      timestamp: new Date().toISOString(),
+      reason,
+      applicationId: id,
+    };
+    applications[idx].actionHistories.push(history);
+    applications[idx].status = 'Rejected';
+    applications[idx].rejectionReason = reason;
+    applications[idx].updatedAt = new Date().toISOString();
+    return { ...applications[idx] };
   },
 
-  // Batch approve
-  batchApproveApplications: async (ids: string[], adminName: string = 'Admin') => {
+  batchApprove: async (ids: string[], adminName: string = 'Admin'): Promise<RegistrationApplication[]> => {
     const results: RegistrationApplication[] = [];
     for (const id of ids) {
       const app = await applicationService.approveApplication(id, adminName);
       results.push(app);
     }
-    return Promise.resolve(results);
+    return results;
   },
 
-  // Batch reject
-  batchRejectApplications: async (ids: string[], reason: string, adminName: string = 'Admin') => {
+  batchReject: async (ids: string[], reason: string, adminName: string = 'Admin'): Promise<RegistrationApplication[]> => {
     const results: RegistrationApplication[] = [];
     for (const id of ids) {
       const app = await applicationService.rejectApplication(id, reason, adminName);
       results.push(app);
     }
-    return Promise.resolve(results);
+    return results;
   },
 };
 
-// Club Member Service
 export const memberService = {
-  // Get members by club
-  getMembersByClub: async (clubId: string) => {
-    const clubMembers: ClubMember[] = applications
+  getMembersByClub: async (clubId: string): Promise<ClubMember[]> => {
+    return applications
       .filter((a) => a.clubId === clubId && a.status === 'Approved')
       .map((a) => ({
         id: `member-${a.id}`,
@@ -194,12 +270,10 @@ export const memberService = {
         clubId: a.clubId,
         joinedAt: a.updatedAt,
       }));
-    return Promise.resolve(clubMembers);
   },
 
-  // Get all members
-  getAllMembers: async () => {
-    const allMembers: ClubMember[] = applications
+  getAllMembers: async (): Promise<ClubMember[]> => {
+    return applications
       .filter((a) => a.status === 'Approved')
       .map((a) => ({
         id: `member-${a.id}`,
@@ -213,35 +287,29 @@ export const memberService = {
         clubId: a.clubId,
         joinedAt: a.updatedAt,
       }));
-    return Promise.resolve(allMembers);
   },
 
-  // Change club for members
-  changeClubForMembers: async (memberIds: string[], newClubId: string) => {
-    const applicationIds = memberIds.map((id) => id.replace('member-', ''));
-    for (const appId of applicationIds) {
-      const index = applications.findIndex((a) => a.id === appId);
-      if (index !== -1) {
-        applications[index].clubId = newClubId;
-        applications[index].updatedAt = new Date().toISOString();
+  changeClubForMembers: async (memberIds: string[], newClubId: string): Promise<void> => {
+    const appIds = memberIds.map((id) => id.replace('member-', ''));
+    for (const appId of appIds) {
+      const idx = applications.findIndex((a) => a.id === appId);
+      if (idx !== -1) {
+        applications[idx].clubId = newClubId;
+        applications[idx].updatedAt = new Date().toISOString();
       }
     }
-    return Promise.resolve();
   },
 };
 
-// Statistics Service
 export const statisticsService = {
-  // Get statistics
-  getStatistics: async (): Promise<ClubStatistics> => {
-    const totalClubs = clubs.length;
-    const totalApplications = {
+  getStatistics: async (): Promise<ClubStatistics> => ({
+    totalClubs: clubs.length,
+    totalApplications: {
       pending: applications.filter((a) => a.status === 'Pending').length,
       approved: applications.filter((a) => a.status === 'Approved').length,
       rejected: applications.filter((a) => a.status === 'Rejected').length,
-    };
-
-    const applicationsByClub = clubs.map((club) => {
+    },
+    applicationsByClub: clubs.map((club) => {
       const clubApps = applications.filter((a) => a.clubId === club.id);
       return {
         clubName: club.name,
@@ -250,21 +318,6 @@ export const statisticsService = {
         approved: clubApps.filter((a) => a.status === 'Approved').length,
         rejected: clubApps.filter((a) => a.status === 'Rejected').length,
       };
-    });
-
-    return Promise.resolve({
-      totalClubs,
-      totalApplications,
-      applicationsByClub,
-    });
-  },
-};
-
-// Action History Service
-export const historyService = {
-  // Get history for application
-  getHistoryForApplication: async (applicationId: string) => {
-    const app = applications.find((a) => a.id === applicationId);
-    return Promise.resolve(app?.actionHistories || []);
-  },
+    }),
+  }),
 };

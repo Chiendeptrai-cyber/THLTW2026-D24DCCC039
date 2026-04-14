@@ -1,16 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import {
-  Card,
-  Table,
-  Button,
-  Space,
-  Modal,
-  message,
-  Popconfirm,
-  Tag,
-  Input,
-  Select,
-} from 'antd';
+import { Card, Table, Button, Space, message, Popconfirm, Tag, Input, Select, Descriptions, Modal } from 'antd';
 import {
   PlusOutlined,
   EditOutlined,
@@ -26,16 +15,18 @@ import moment from 'moment';
 import ApplicationModal from './components/ApplicationModal';
 import ApproveRejectModal from './components/ApproveRejectModal';
 import HistoryModal from './components/HistoryModal';
-import type { RegistrationApplication, CauLacBoState } from '@/models/cauLacBo';
+import type { RegistrationApplication, CauLacBoState, Club } from '@/models/cauLacBo';
 
 interface RegistrationPageProps {
-  cauLacBo?: CauLacBoState;
-  dispatch?: any;
+  cauLacBo: CauLacBoState;
+  dispatch: any;
 }
 
-const RegistrationPage: React.FC<RegistrationPageProps> = ({ cauLacBo = {}, dispatch }) => {
-  const [visible, setVisible] = useState(false);
+const RegistrationPage: React.FC<RegistrationPageProps> = ({ cauLacBo, dispatch }) => {
+  const [formVisible, setFormVisible] = useState(false);
+  const [detailVisible, setDetailVisible] = useState(false);
   const [editingApp, setEditingApp] = useState<RegistrationApplication | undefined>();
+  const [viewingApp, setViewingApp] = useState<RegistrationApplication | undefined>();
   const [approveRejectVisible, setApproveRejectVisible] = useState(false);
   const [approveRejectAction, setApproveRejectAction] = useState<'approve' | 'reject'>('approve');
   const [selectedIds, setSelectedIds] = useState<string[]>([]);
@@ -44,61 +35,46 @@ const RegistrationPage: React.FC<RegistrationPageProps> = ({ cauLacBo = {}, disp
   const [searchText, setSearchText] = useState('');
   const [filterStatus, setFilterStatus] = useState<string>('');
 
-  const { applications = [], clubs = [], loading = false } = cauLacBo;
+  const { applications = [], clubs = [], loading = false } = cauLacBo || {};
 
   useEffect(() => {
-    dispatch?.({ type: 'cauLacBo/getApplications' });
-    dispatch?.({ type: 'cauLacBo/getClubs' });
+    dispatch({ type: 'cauLacBo/getApplications' });
+    dispatch({ type: 'cauLacBo/getClubs' });
   }, []);
 
-  const handleAddApplication = () => {
+  const handleAdd = () => {
     setEditingApp(undefined);
-    setVisible(true);
+    setFormVisible(true);
   };
 
-  const handleEditApplication = (app: RegistrationApplication) => {
+  const handleEdit = (app: RegistrationApplication) => {
     setEditingApp(app);
-    setVisible(true);
+    setFormVisible(true);
   };
 
   const handleViewDetail = (app: RegistrationApplication) => {
-    setEditingApp(app);
-    setVisible(true);
+    setViewingApp(app);
+    setDetailVisible(true);
   };
 
-  const handleDeleteApplication = (id: string) => {
-    dispatch?.({
-      type: 'cauLacBo/deleteApplication',
-      payload: id,
-    });
+  const handleDelete = (id: string) => {
+    dispatch({ type: 'cauLacBo/deleteApplication', payload: id });
     message.success('Xóa đơn đăng ký thành công');
   };
 
-  const handleSubmitApplication = (data: any) => {
+  const handleSubmit = (data: any) => {
     if (editingApp) {
-      dispatch?.({
-        type: 'cauLacBo/updateApplication',
-        payload: {
-          id: editingApp.id,
-          updates: data,
-        },
-      });
+      dispatch({ type: 'cauLacBo/updateApplication', payload: { id: editingApp.id, updates: data } });
       message.success('Cập nhật đơn đăng ký thành công');
     } else {
-      dispatch?.({
-        type: 'cauLacBo/createApplication',
-        payload: {
-          ...data,
-          status: 'Pending',
-          actionHistories: [],
-        },
-      });
+      dispatch({ type: 'cauLacBo/createApplication', payload: data });
       message.success('Thêm đơn đăng ký thành công');
     }
-    setVisible(false);
+    setFormVisible(false);
+    setEditingApp(undefined);
   };
 
-  const handleApproveReject = (action: 'approve' | 'reject') => {
+  const handleBatchAction = (action: 'approve' | 'reject') => {
     if (selectedIds.length === 0) {
       message.warning('Vui lòng chọn ít nhất một đơn đăng ký');
       return;
@@ -109,31 +85,30 @@ const RegistrationPage: React.FC<RegistrationPageProps> = ({ cauLacBo = {}, disp
 
   const handleApproveRejectSubmit = (reason?: string) => {
     if (approveRejectAction === 'approve') {
-      dispatch?.({
-        type: 'cauLacBo/batchApproveApplications',
-        payload: {
-          ids: selectedIds,
-          adminName: 'Admin',
-        },
-      });
-      message.success('Duyệt đơn thành công');
+      dispatch({ type: 'cauLacBo/batchApprove', payload: { ids: selectedIds, adminName: 'Admin' } });
+      message.success(`Duyệt ${selectedIds.length} đơn thành công`);
     } else {
       if (!reason) {
         message.error('Vui lòng nhập lý do từ chối');
         return;
       }
-      dispatch?.({
-        type: 'cauLacBo/batchRejectApplications',
-        payload: {
-          ids: selectedIds,
-          reason,
-          adminName: 'Admin',
-        },
-      });
-      message.success('Từ chối đơn thành công');
+      dispatch({ type: 'cauLacBo/batchReject', payload: { ids: selectedIds, reason, adminName: 'Admin' } });
+      message.success(`Từ chối ${selectedIds.length} đơn thành công`);
     }
     setApproveRejectVisible(false);
     setSelectedIds([]);
+  };
+
+  const handleSingleApprove = (id: string) => {
+    setSelectedIds([id]);
+    setApproveRejectAction('approve');
+    setApproveRejectVisible(true);
+  };
+
+  const handleSingleReject = (id: string) => {
+    setSelectedIds([id]);
+    setApproveRejectAction('reject');
+    setApproveRejectVisible(true);
   };
 
   const handleViewHistory = (app: RegistrationApplication) => {
@@ -141,7 +116,12 @@ const RegistrationPage: React.FC<RegistrationPageProps> = ({ cauLacBo = {}, disp
     setHistoryVisible(true);
   };
 
-  const filteredApplications = applications.filter((app) => {
+  const getClubName = (clubId: string) => {
+    const club = clubs.find((c: Club) => c.id === clubId);
+    return club?.name || '-';
+  };
+
+  const filteredApplications = applications.filter((app: RegistrationApplication) => {
     const matchSearch =
       app.fullName.toLowerCase().includes(searchText.toLowerCase()) ||
       app.email.toLowerCase().includes(searchText.toLowerCase()) ||
@@ -149,6 +129,12 @@ const RegistrationPage: React.FC<RegistrationPageProps> = ({ cauLacBo = {}, disp
     const matchStatus = filterStatus ? app.status === filterStatus : true;
     return matchSearch && matchStatus;
   });
+
+  const statusConfig: Record<string, { color: string; label: string }> = {
+    Pending: { color: 'orange', label: 'Chờ duyệt' },
+    Approved: { color: 'green', label: 'Đã duyệt' },
+    Rejected: { color: 'red', label: 'Từ chối' },
+  };
 
   const columns: ColumnsType<RegistrationApplication> = [
     {
@@ -171,71 +157,63 @@ const RegistrationPage: React.FC<RegistrationPageProps> = ({ cauLacBo = {}, disp
       title: 'Giới tính',
       dataIndex: 'gender',
       key: 'gender',
+      width: 90,
+      filters: [
+        { text: 'Nam', value: 'Nam' },
+        { text: 'Nữ', value: 'Nữ' },
+      ],
+      onFilter: (value: any, record) => record.gender === value,
     },
     {
-      title: 'CLB',
+      title: 'Câu lạc bộ',
       dataIndex: 'clubId',
       key: 'clubId',
-      render: (clubId) => {
-        const club = clubs.find((c) => c.id === clubId);
-        return club?.name || '-';
-      },
+      render: (clubId: string) => getClubName(clubId),
+      filters: clubs.map((c: Club) => ({ text: c.name, value: c.id })),
+      onFilter: (value: any, record) => record.clubId === value,
     },
     {
       title: 'Trạng thái',
       dataIndex: 'status',
       key: 'status',
-      render: (status) => {
-        const colors = {
-          Pending: 'orange',
-          Approved: 'green',
-          Rejected: 'red',
-        };
-        const labels = {
-          Pending: 'Chờ duyệt',
-          Approved: 'Đã duyệt',
-          Rejected: 'Từ chối',
-        };
-        return <Tag color={colors[status]}>{labels[status]}</Tag>;
+      width: 110,
+      render: (status: string) => {
+        const config = statusConfig[status];
+        return <Tag color={config?.color}>{config?.label}</Tag>;
       },
       sorter: (a, b) => a.status.localeCompare(b.status),
     },
     {
       title: 'Thao tác',
       key: 'actions',
-      width: 280,
-      render: (_, record) => (
+      width: 360,
+      render: (_: any, record: RegistrationApplication) => (
         <Space size="small" wrap>
-          <Button
-            type="primary"
-            size="small"
-            icon={<EyeOutlined />}
-            onClick={() => handleViewDetail(record)}
-          >
+          <Button size="small" icon={<EyeOutlined />} onClick={() => handleViewDetail(record)}>
             Chi tiết
           </Button>
-          <Button
-            type="default"
-            size="small"
-            icon={<EditOutlined />}
-            onClick={() => handleEditApplication(record)}
-          >
+          <Button size="small" icon={<EditOutlined />} onClick={() => handleEdit(record)}>
             Sửa
           </Button>
+          {record.status === 'Pending' && (
+            <>
+              <Button type="primary" size="small" icon={<CheckOutlined />} onClick={() => handleSingleApprove(record.id)} style={{ background: '#52c41a', borderColor: '#52c41a' }}>
+                Duyệt
+              </Button>
+              <Button type="primary" danger size="small" icon={<CloseOutlined />} onClick={() => handleSingleReject(record.id)}>
+                Từ chối
+              </Button>
+            </>
+          )}
           {record.actionHistories && record.actionHistories.length > 0 && (
-            <Button
-              type="default"
-              size="small"
-              icon={<HistoryOutlined />}
-              onClick={() => handleViewHistory(record)}
-            >
+            <Button size="small" icon={<HistoryOutlined />} onClick={() => handleViewHistory(record)}>
               Lịch sử
             </Button>
           )}
           <Popconfirm
             title="Xác nhận xóa"
-            description="Bạn có chắc chắn muốn xóa?"
-            onConfirm={() => handleDeleteApplication(record.id)}
+            description="Bạn có chắc chắn muốn xóa đơn đăng ký này?"
+            onConfirm={() => handleDelete(record.id)}
             okText="Xóa"
             cancelText="Hủy"
           >
@@ -256,18 +234,19 @@ const RegistrationPage: React.FC<RegistrationPageProps> = ({ cauLacBo = {}, disp
   };
 
   return (
-    <Card title="Quản lý đơn đăng ký">
-      <Space direction="vertical" style={{ width: '100%' }}>
-        <div style={{ display: 'flex', gap: 16, alignItems: 'center' }}>
+    <Card title="Quản lý đơn đăng ký thành viên">
+      <Space direction="vertical" style={{ width: '100%' }} size="middle">
+        <div style={{ display: 'flex', gap: 16, alignItems: 'center', flexWrap: 'wrap' }}>
           <Input.Search
-            placeholder="Tìm kiếm theo tên, email hoặc SĐT"
+            placeholder="Tìm kiếm theo tên, email hoặc SĐT..."
             value={searchText}
             onChange={(e) => setSearchText(e.target.value)}
-            style={{ width: 300 }}
+            allowClear
+            style={{ width: 350 }}
           />
           <Select
             placeholder="Lọc theo trạng thái"
-            style={{ width: 200 }}
+            style={{ width: 180 }}
             allowClear
             value={filterStatus || undefined}
             onChange={(val) => setFilterStatus(val || '')}
@@ -276,29 +255,20 @@ const RegistrationPage: React.FC<RegistrationPageProps> = ({ cauLacBo = {}, disp
             <Select.Option value="Approved">Đã duyệt</Select.Option>
             <Select.Option value="Rejected">Từ chối</Select.Option>
           </Select>
-          <Button type="primary" icon={<PlusOutlined />} onClick={handleAddApplication}>
+          <Button type="primary" icon={<PlusOutlined />} onClick={handleAdd}>
             Thêm mới
           </Button>
         </div>
 
         {selectedIds.length > 0 && (
-          <div style={{ display: 'flex', gap: 8 }}>
-            <Button
-              type="primary"
-              icon={<CheckOutlined />}
-              onClick={() => handleApproveReject('approve')}
-            >
-              Duyệt {selectedIds.length} đơn
+          <Space>
+            <Button type="primary" icon={<CheckOutlined />} onClick={() => handleBatchAction('approve')} style={{ background: '#52c41a', borderColor: '#52c41a' }}>
+              Duyệt {selectedIds.length} đơn đã chọn
             </Button>
-            <Button
-              type="primary"
-              danger
-              icon={<CloseOutlined />}
-              onClick={() => handleApproveReject('reject')}
-            >
-              Từ chối {selectedIds.length} đơn
+            <Button type="primary" danger icon={<CloseOutlined />} onClick={() => handleBatchAction('reject')}>
+              Không duyệt {selectedIds.length} đơn đã chọn
             </Button>
-          </div>
+          </Space>
         )}
 
         <Table
@@ -306,27 +276,69 @@ const RegistrationPage: React.FC<RegistrationPageProps> = ({ cauLacBo = {}, disp
           dataSource={filteredApplications}
           loading={loading}
           rowKey="id"
-          pagination={{ pageSize: 10 }}
+          pagination={{ pageSize: 10, showSizeChanger: true, showTotal: (total) => `Tổng ${total} đơn` }}
           rowSelection={rowSelection}
         />
       </Space>
 
       <ApplicationModal
-        visible={visible}
-        title={editingApp ? 'Chi tiết đơn đăng ký' : 'Thêm đơn đăng ký mới'}
+        visible={formVisible}
+        title={editingApp ? 'Chỉnh sửa đơn đăng ký' : 'Thêm đơn đăng ký mới'}
         initialData={editingApp}
         clubs={clubs}
-        onSubmit={handleSubmitApplication}
-        onCancel={() => setVisible(false)}
+        onSubmit={handleSubmit}
+        onCancel={() => {
+          setFormVisible(false);
+          setEditingApp(undefined);
+        }}
         loading={loading}
       />
+
+      <Modal
+        title="Chi tiết đơn đăng ký"
+        visible={detailVisible}
+        onCancel={() => {
+          setDetailVisible(false);
+          setViewingApp(undefined);
+        }}
+        footer={null}
+        width={700}
+      >
+        {viewingApp && (
+          <Descriptions bordered column={2} size="small">
+            <Descriptions.Item label="Họ tên" span={2}>{viewingApp.fullName}</Descriptions.Item>
+            <Descriptions.Item label="Email">{viewingApp.email}</Descriptions.Item>
+            <Descriptions.Item label="SĐT">{viewingApp.phone}</Descriptions.Item>
+            <Descriptions.Item label="Giới tính">{viewingApp.gender}</Descriptions.Item>
+            <Descriptions.Item label="Địa chỉ">{viewingApp.address}</Descriptions.Item>
+            <Descriptions.Item label="Sở trường" span={2}>{viewingApp.specialty}</Descriptions.Item>
+            <Descriptions.Item label="Câu lạc bộ">{getClubName(viewingApp.clubId)}</Descriptions.Item>
+            <Descriptions.Item label="Trạng thái">
+              <Tag color={statusConfig[viewingApp.status]?.color}>
+                {statusConfig[viewingApp.status]?.label}
+              </Tag>
+            </Descriptions.Item>
+            <Descriptions.Item label="Lý do đăng ký" span={2}>{viewingApp.registrationReason}</Descriptions.Item>
+            {viewingApp.rejectionReason && (
+              <Descriptions.Item label="Lý do từ chối" span={2}>
+                <span style={{ color: '#f5222d' }}>{viewingApp.rejectionReason}</span>
+              </Descriptions.Item>
+            )}
+            <Descriptions.Item label="Ngày đăng ký">{moment(viewingApp.createdAt).format('DD/MM/YYYY HH:mm')}</Descriptions.Item>
+            <Descriptions.Item label="Cập nhật lần cuối">{moment(viewingApp.updatedAt).format('DD/MM/YYYY HH:mm')}</Descriptions.Item>
+          </Descriptions>
+        )}
+      </Modal>
 
       <ApproveRejectModal
         visible={approveRejectVisible}
         action={approveRejectAction}
-        ids={selectedIds}
+        count={selectedIds.length}
         onSubmit={handleApproveRejectSubmit}
-        onCancel={() => setApproveRejectVisible(false)}
+        onCancel={() => {
+          setApproveRejectVisible(false);
+          setSelectedIds([]);
+        }}
         loading={loading}
       />
 
@@ -339,4 +351,4 @@ const RegistrationPage: React.FC<RegistrationPageProps> = ({ cauLacBo = {}, disp
   );
 };
 
-export default connect(({ cauLacBo }) => ({ cauLacBo }))(RegistrationPage);
+export default connect(({ cauLacBo }: any) => ({ cauLacBo }))(RegistrationPage);

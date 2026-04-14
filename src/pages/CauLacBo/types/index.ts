@@ -1,26 +1,24 @@
-// Club Types
 export interface Club {
   id: string;
   name: string;
   avatar?: string;
   foundedDate: string;
-  description: string; // HTML
+  description: string;
   leader: string;
   isActive: boolean;
   createdAt: string;
   updatedAt: string;
 }
 
-// Registration Application Types
 export type ApplicationStatus = 'Pending' | 'Approved' | 'Rejected';
 
 export interface ActionHistory {
   id: string;
   userId: string;
   userName: string;
-  action: 'Approved' | 'Rejected'; // or other actions
+  action: 'Approved' | 'Rejected';
   timestamp: string;
-  reason?: string; // for rejection reason
+  reason?: string;
   applicationId: string;
 }
 
@@ -33,7 +31,7 @@ export interface RegistrationApplication {
   address: string;
   specialty: string;
   clubId: string;
-  clubName?: string; // for display
+  clubName?: string;
   registrationReason: string;
   status: ApplicationStatus;
   rejectionReason?: string;
@@ -42,10 +40,9 @@ export interface RegistrationApplication {
   updatedAt: string;
 }
 
-// Club Member Types
 export interface ClubMember {
   id: string;
-  applicationId: string; // reference to application
+  applicationId: string;
   fullName: string;
   email: string;
   phone: string;
@@ -56,7 +53,6 @@ export interface ClubMember {
   joinedAt: string;
 }
 
-// Statistics Types
 export interface ClubStatistics {
   totalClubs: number;
   totalApplications: {

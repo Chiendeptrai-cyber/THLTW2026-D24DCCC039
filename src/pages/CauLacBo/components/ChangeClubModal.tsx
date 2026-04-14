@@ -1,6 +1,6 @@
 import React from 'react';
-import { Modal, Form, Select, Space, Button } from 'antd';
-import type { FormInstance } from 'antd';
+import { Modal, Form, Select, Button, Alert } from 'antd';
+import { SwapOutlined } from '@ant-design/icons';
 import type { Club } from '@/models/cauLacBo';
 
 interface ChangeClubModalProps {
@@ -24,14 +24,16 @@ const ChangeClubModal: React.FC<ChangeClubModalProps> = ({
 }) => {
   const [form] = Form.useForm();
 
+  const currentClubName = clubs.find((c) => c.id === currentClubId)?.name || '';
+  const availableClubs = clubs.filter((c) => c.id !== currentClubId);
+
   const handleSubmit = async () => {
     try {
-      await form.validateFields();
-      const { newClubId } = form.getFieldsValue();
-      onSubmit(newClubId);
+      const values = await form.validateFields();
+      onSubmit(values.newClubId);
       form.resetFields();
-    } catch (error) {
-      // Validation failed
+    } catch {
+      // validation failed
     }
   };
 
@@ -43,20 +45,33 @@ const ChangeClubModal: React.FC<ChangeClubModalProps> = ({
 
   return (
     <Modal
-      title={`Chuyển CLB cho ${selectedCount} thành viên`}
+      title={
+        <span>
+          <SwapOutlined style={{ marginRight: 8 }} />
+          Chuyển CLB cho {selectedCount} thành viên
+        </span>
+      }
       visible={visible}
       onCancel={onCancel}
       width={500}
       footer={null}
+      destroyOnClose
     >
       <Form form={form} layout="vertical">
-        <div style={{ marginBottom: 16 }}>
-          <p>Chọn câu lạc bộ mới để chuyển {selectedCount} thành viên</p>
-        </div>
+        <Alert
+          message={`Bạn đang chuyển ${selectedCount} thành viên từ "${currentClubName}" sang CLB mới.`}
+          type="info"
+          showIcon
+          style={{ marginBottom: 16 }}
+        />
 
-        <Form.Item label="Câu lạc bộ mới" name="newClubId" rules={[{ required: true, message: 'Vui lòng chọn CLB' }]}>
-          <Select placeholder="Chọn câu lạc bộ">
-            {clubs.map((club) => (
+        <Form.Item
+          label="Câu lạc bộ mới"
+          name="newClubId"
+          rules={[{ required: true, message: 'Vui lòng chọn CLB mới' }]}
+        >
+          <Select placeholder="Chọn câu lạc bộ muốn chuyển đến" size="large">
+            {availableClubs.map((club) => (
               <Select.Option key={club.id} value={club.id}>
                 {club.name}
               </Select.Option>
@@ -64,12 +79,12 @@ const ChangeClubModal: React.FC<ChangeClubModalProps> = ({
           </Select>
         </Form.Item>
 
-        <Space style={{ width: '100%', justifyContent: 'flex-end' }}>
+        <div style={{ display: 'flex', justifyContent: 'flex-end', gap: 8 }}>
           <Button onClick={onCancel}>Hủy</Button>
           <Button type="primary" loading={loading} onClick={handleSubmit}>
-            Xác nhận
+            Xác nhận chuyển
           </Button>
-        </Space>
+        </div>
       </Form>
     </Modal>
   );

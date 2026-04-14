@@ -1,6 +1,5 @@
-import React, { useState } from 'react';
-import { Modal, Form, Input, InputNumber, DatePicker, Upload, Switch, Button } from 'antd';
-import type { FormInstance } from 'antd';
+import React from 'react';
+import { Modal, Form, Input, DatePicker, Switch } from 'antd';
 import type { Club } from '@/models/cauLacBo';
 import moment from 'moment';
 
@@ -25,9 +24,11 @@ const ClubModal: React.FC<ClubModalProps> = ({ visible, title, initialData, onSu
           description: initialData.description,
           leader: initialData.leader,
           isActive: initialData.isActive,
+          avatar: initialData.avatar,
         });
       } else {
         form.resetFields();
+        form.setFieldsValue({ isActive: true });
       }
     }
   }, [visible, initialData, form]);
@@ -42,26 +43,38 @@ const ClubModal: React.FC<ClubModalProps> = ({ visible, title, initialData, onSu
   };
 
   return (
-    <Modal title={title} visible={visible} onOk={() => form.submit()} onCancel={onCancel} confirmLoading={loading} width={700}>
+    <Modal
+      title={title}
+      visible={visible}
+      onOk={() => form.submit()}
+      onCancel={onCancel}
+      confirmLoading={loading}
+      width={700}
+      destroyOnClose
+    >
       <Form form={form} layout="vertical" onFinish={handleSubmit}>
         <Form.Item label="Tên câu lạc bộ" name="name" rules={[{ required: true, message: 'Vui lòng nhập tên CLB' }]}>
           <Input placeholder="Nhập tên câu lạc bộ" />
         </Form.Item>
 
-        <Form.Item label="Ngày thành lập" name="foundedDate" rules={[{ required: true, message: 'Vui lòng chọn ngày' }]}>
-          <DatePicker style={{ width: '100%' }} format="DD/MM/YYYY" />
+        <Form.Item label="Ảnh đại diện (URL)" name="avatar">
+          <Input placeholder="Nhập URL ảnh đại diện" />
+        </Form.Item>
+
+        <Form.Item label="Ngày thành lập" name="foundedDate" rules={[{ required: true, message: 'Vui lòng chọn ngày thành lập' }]}>
+          <DatePicker style={{ width: '100%' }} format="DD/MM/YYYY" placeholder="Chọn ngày thành lập" />
         </Form.Item>
 
         <Form.Item label="Chủ nhiệm CLB" name="leader" rules={[{ required: true, message: 'Vui lòng nhập tên chủ nhiệm' }]}>
           <Input placeholder="Nhập tên chủ nhiệm CLB" />
         </Form.Item>
 
-        <Form.Item label="Mô tả" name="description" rules={[{ required: true, message: 'Vui lòng nhập mô tả' }]}>
-          <Input.TextArea rows={4} placeholder="Nhập mô tả câu lạc bộ (HTML supported)" />
+        <Form.Item label="Mô tả (HTML)" name="description" rules={[{ required: true, message: 'Vui lòng nhập mô tả' }]}>
+          <Input.TextArea rows={5} placeholder="Nhập mô tả câu lạc bộ (hỗ trợ HTML)" />
         </Form.Item>
 
         <Form.Item label="Hoạt động" name="isActive" valuePropName="checked">
-          <Switch />
+          <Switch checkedChildren="Có" unCheckedChildren="Không" />
         </Form.Item>
       </Form>
     </Modal>

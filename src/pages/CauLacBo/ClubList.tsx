@@ -1,20 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import {
-  Card,
-  Table,
-  Button,
-  Space,
-  message,
-  Popconfirm,
-  Input,
-  Tag,
-} from 'antd';
-import {
-  PlusOutlined,
-  EditOutlined,
-  DeleteOutlined,
-  TeamOutlined,
-} from '@ant-design/icons';
+import { Card, Table, Button, Space, message, Popconfirm, Input, Tag, Avatar, Tooltip } from 'antd';
+import { PlusOutlined, EditOutlined, DeleteOutlined, TeamOutlined } from '@ant-design/icons';
 import { connect } from 'umi';
 import type { ColumnsType } from 'antd/lib/table';
 import moment from 'moment';
@@ -23,137 +9,135 @@ import MembersModal from './components/MembersModal';
 import type { Club, CauLacBoState, ClubMember } from '@/models/cauLacBo';
 
 interface ClubListPageProps {
-  cauLacBo?: CauLacBoState;
-  dispatch?: any;
+  cauLacBo: CauLacBoState;
+  dispatch: any;
 }
 
-const ClubListPage: React.FC<ClubListPageProps> = ({ cauLacBo = {}, dispatch }: any) => {
+const ClubListPage: React.FC<ClubListPageProps> = ({ cauLacBo, dispatch }) => {
   const [visible, setVisible] = useState(false);
   const [editingClub, setEditingClub] = useState<Club | undefined>();
   const [searchText, setSearchText] = useState('');
   const [memberModalVisible, setMemberModalVisible] = useState(false);
   const [selectedClubForMembers, setSelectedClubForMembers] = useState<Club | undefined>();
-  const [clubMembers, setClubMembers] = useState<ClubMember[]>([]);
-  const [membersLoading, setMembersLoading] = useState(false);
 
-  const { clubs = [], loading = false, members = [] } = cauLacBo;
+  const { clubs = [], members = [], loading = false } = cauLacBo || {};
 
   useEffect(() => {
-    console.log('🔍 ClubList - Redux cauLacBo:', cauLacBo);
-    console.log('🔍 ClubList - clubs data:', clubs);
-    console.log('🔍 ClubList - dispatch available:', !!dispatch);
-    dispatch?.({ type: 'cauLacBo/getClubs' });
+    dispatch({ type: 'cauLacBo/getClubs' });
   }, []);
 
-  const handleAddClub = () => {
+  const handleAdd = () => {
     setEditingClub(undefined);
     setVisible(true);
   };
 
-  const handleEditClub = (club: Club) => {
+  const handleEdit = (club: Club) => {
     setEditingClub(club);
     setVisible(true);
   };
 
-  const handleDeleteClub = (id: string) => {
-    dispatch?.({
-      type: 'cauLacBo/deleteClub',
-      payload: id,
-    });
+  const handleDelete = (id: string) => {
+    dispatch({ type: 'cauLacBo/deleteClub', payload: id });
     message.success('Xóa câu lạc bộ thành công');
   };
 
-  const handleSubmitClub = (data: any) => {
+  const handleSubmit = (data: any) => {
     if (editingClub) {
-      dispatch?.({
-        type: 'cauLacBo/updateClub',
-        payload: {
-          id: editingClub.id,
-          updates: data,
-        },
-      });
+      dispatch({ type: 'cauLacBo/updateClub', payload: { id: editingClub.id, updates: data } });
       message.success('Cập nhật câu lạc bộ thành công');
     } else {
-      dispatch?.({
-        type: 'cauLacBo/createClub',
-        payload: data,
-      });
+      dispatch({ type: 'cauLacBo/createClub', payload: data });
       message.success('Thêm câu lạc bộ thành công');
     }
     setVisible(false);
+    setEditingClub(undefined);
   };
 
   const handleViewMembers = (club: Club) => {
     setSelectedClubForMembers(club);
-    setMembersLoading(true);
-    // Filter members by club
-    const filteredMembers = members.filter((m) => m.clubId === club.id);
-    setClubMembers(filteredMembers);
-    setMembersLoading(false);
+    dispatch({ type: 'cauLacBo/getMembersByClub', payload: club.id });
     setMemberModalVisible(true);
   };
 
   const filteredClubs = clubs.filter(
-    (club) =>
+    (club: Club) =>
       club.name.toLowerCase().includes(searchText.toLowerCase()) ||
-      club.leader.toLowerCase().includes(searchText.toLowerCase())
+      club.leader.toLowerCase().includes(searchText.toLowerCase()),
   );
 
   const columns: ColumnsType<Club> = [
     {
+      title: 'Ảnh đại diện',
+      dataIndex: 'avatar',
+      key: 'avatar',
+      width: 80,
+      render: (avatar: string, record: Club) => (
+        <Avatar src={avatar} size={40}>
+          {record.name.charAt(0)}
+        </Avatar>
+      ),
+    },
+    {
       title: 'Tên câu lạc bộ',
       dataIndex: 'name',
       key: 'name',
-      sorter: (a, b) => a.name.localeCompare(b.name),
+      sorter: (a: Club, b: Club) => a.name.localeCompare(b.name),
     },
     {
       title: 'Ngày thành lập',
       dataIndex: 'foundedDate',
       key: 'foundedDate',
-      render: (date) => moment(date).format('DD/MM/YYYY'),
-      sorter: (a, b) => new Date(a.foundedDate).getTime() - new Date(b.foundedDate).getTime(),
+      render: (date: string) => moment(date).format('DD/MM/YYYY'),
+      sorter: (a: Club, b: Club) => new Date(a.foundedDate).getTime() - new Date(b.foundedDate).getTime(),
     },
     {
-      title: 'Chủ nhiệm',
+      title: 'Mô tả',
+      dataIndex: 'description',
+      key: 'description',
+      width: 250,
+      ellipsis: true,
+      render: (html: string) => (
+        <Tooltip title={<div dangerouslySetInnerHTML={{ __html: html }} />}>
+          <div dangerouslySetInnerHTML={{ __html: html }} style={{ maxHeight: 40, overflow: 'hidden' }} />
+        </Tooltip>
+      ),
+    },
+    {
+      title: 'Chủ nhiệm CLB',
       dataIndex: 'leader',
       key: 'leader',
+      sorter: (a: Club, b: Club) => a.leader.localeCompare(b.leader),
     },
     {
       title: 'Hoạt động',
       dataIndex: 'isActive',
       key: 'isActive',
-      render: (isActive) => (
-        <Tag color={isActive ? 'green' : 'red'}>
-          {isActive ? 'Có' : 'Không'}
-        </Tag>
+      width: 100,
+      filters: [
+        { text: 'Có', value: true },
+        { text: 'Không', value: false },
+      ],
+      onFilter: (value: any, record: Club) => record.isActive === value,
+      render: (isActive: boolean) => (
+        <Tag color={isActive ? 'green' : 'red'}>{isActive ? 'Có' : 'Không'}</Tag>
       ),
     },
     {
       title: 'Thao tác',
       key: 'actions',
-      width: 200,
-      render: (_, record) => (
+      width: 280,
+      render: (_: any, record: Club) => (
         <Space size="small">
-          <Button
-            type="primary"
-            size="small"
-            icon={<TeamOutlined />}
-            onClick={() => handleViewMembers(record)}
-          >
+          <Button type="primary" size="small" icon={<TeamOutlined />} onClick={() => handleViewMembers(record)}>
             Thành viên
           </Button>
-          <Button
-            type="default"
-            size="small"
-            icon={<EditOutlined />}
-            onClick={() => handleEditClub(record)}
-          >
+          <Button size="small" icon={<EditOutlined />} onClick={() => handleEdit(record)}>
             Sửa
           </Button>
           <Popconfirm
             title="Xác nhận xóa"
-            description="Bạn có chắc chắn muốn xóa?"
-            onConfirm={() => handleDeleteClub(record.id)}
+            description="Bạn có chắc chắn muốn xóa câu lạc bộ này?"
+            onConfirm={() => handleDelete(record.id)}
             okText="Xóa"
             cancelText="Hủy"
           >
@@ -170,43 +154,38 @@ const ClubListPage: React.FC<ClubListPageProps> = ({ cauLacBo = {}, dispatch }: 
     <Card
       title="Quản lý câu lạc bộ"
       extra={
-        <Button type="primary" icon={<PlusOutlined />} onClick={handleAddClub}>
+        <Button type="primary" icon={<PlusOutlined />} onClick={handleAdd}>
           Thêm mới
         </Button>
       }
     >
       <div style={{ marginBottom: 16 }}>
         <Input.Search
-          placeholder="Tìm kiếm theo tên hoặc chủ nhiệm"
+          placeholder="Tìm kiếm theo tên CLB hoặc chủ nhiệm..."
           value={searchText}
           onChange={(e) => setSearchText(e.target.value)}
-          style={{ width: 300 }}
+          allowClear
+          style={{ width: 350 }}
         />
-        <div style={{ marginTop: 8, fontSize: 12, color: '#999' }}>
-          Debug: {clubs.length} clubs loaded | Status: {loading ? 'Loading...' : 'Ready'}
-        </div>
       </div>
 
-      {filteredClubs.length === 0 ? (
-        <div style={{ textAlign: 'center', padding: '40px' }}>
-          <p>Chưa có câu lạc bộ nào. Hãy thêm mới!</p>
-        </div>
-      ) : (
-        <Table
-          columns={columns}
-          dataSource={filteredClubs}
-          loading={loading}
-          rowKey="id"
-          pagination={{ pageSize: 10 }}
-        />
-      )}
+      <Table
+        columns={columns}
+        dataSource={filteredClubs}
+        loading={loading}
+        rowKey="id"
+        pagination={{ pageSize: 10, showSizeChanger: true, showTotal: (total) => `Tổng ${total} CLB` }}
+      />
 
       <ClubModal
         visible={visible}
         title={editingClub ? 'Chỉnh sửa câu lạc bộ' : 'Thêm câu lạc bộ mới'}
         initialData={editingClub}
-        onSubmit={handleSubmitClub}
-        onCancel={() => setVisible(false)}
+        onSubmit={handleSubmit}
+        onCancel={() => {
+          setVisible(false);
+          setEditingClub(undefined);
+        }}
         loading={loading}
       />
 
@@ -214,9 +193,12 @@ const ClubListPage: React.FC<ClubListPageProps> = ({ cauLacBo = {}, dispatch }: 
         <MembersModal
           visible={memberModalVisible}
           clubName={selectedClubForMembers.name}
-          members={clubMembers}
-          onCancel={() => setMemberModalVisible(false)}
-          loading={membersLoading}
+          members={members}
+          onCancel={() => {
+            setMemberModalVisible(false);
+            setSelectedClubForMembers(undefined);
+          }}
+          loading={loading}
         />
       )}
     </Card>
