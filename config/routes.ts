@@ -43,6 +43,12 @@
 		component: './TodoList',
 	},
 	{
+		path: '/khoa-hoc',
+		name: 'Khóa học',
+		icon: 'VideoCameraOutlined',
+		component: './KhoaHoc',
+	},
+	{
 		path: '/van-bang',
 		name: 'VanBang',
 		icon: 'BookOutlined',

@@ -8,7 +8,7 @@ let clubs: Club[] = [
     avatar: 'https://via.placeholder.com/100?text=Programming',
     foundedDate: '2020-01-15',
     description: '<p>Câu lạc bộ dành cho những bạn yêu thích lập trình</p>',
-    leader: 'Nguyễn Văn A',
+    leader: 'Thiên Phố',
     isActive: true,
     createdAt: '2020-01-15',
     updatedAt: '2020-01-15',
