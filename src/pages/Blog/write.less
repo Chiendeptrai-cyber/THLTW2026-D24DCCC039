@@ -1,0 +1,101 @@
+.write {
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 20px 0;
+
+  .backButton {
+    margin-bottom: 24px;
+    font-size: 14px;
+  }
+
+  .formCard {
+    border-radius: 8px;
+
+    :global(.ant-card-head) {
+      font-size: 18px;
+      font-weight: 600;
+    }
+
+    :global(.ant-card-body) {
+      padding: 24px;
+    }
+  }
+
+  .form {
+    :global(.ant-form-item) {
+      margin-bottom: 20px;
+    }
+
+    :global(.ant-form-item-label > label) {
+      font-weight: 500;
+      font-size: 14px;
+    }
+
+    :global(.ant-input),
+    :global(.ant-input-textarea),
+    :global(.ant-select) {
+      font-size: 14px;
+    }
+
+    :global(.ant-input-textarea-show-count::after) {
+      float: right;
+    }
+  }
+
+  .formActions {
+    margin-top: 32px;
+    padding-top: 24px;
+    border-top: 1px solid #f0f0f0;
+  }
+
+  .tips {
+    margin-top: 24px;
+    background: #f6f8fb;
+    border-color: #d6e4ff;
+
+    :global(.ant-card-head) {
+      background: #f6f8fb;
+      border-color: #d6e4ff;
+    }
+
+    ul {
+      margin: 0;
+      padding-left: 20px;
+
+      li {
+        margin: 8px 0;
+        line-height: 1.6;
+        color: #333;
+
+        strong {
+          color: #1890ff;
+        }
+      }
+    }
+  }
+
+  .container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 400px;
+  }
+}
+
+@media (max-width: 768px) {
+  .write {
+    padding: 10px;
+
+    .formCard {
+      :global(.ant-card-body) {
+        padding: 16px;
+      }
+    }
+
+    .tips {
+      ul li {
+        font-size: 13px;
+      }
+    }
+  }
+}

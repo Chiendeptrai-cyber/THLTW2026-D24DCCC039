@@ -1,0 +1,154 @@
+.about {
+  .header {
+    text-align: center;
+    margin-bottom: 40px;
+
+    h1 {
+      font-size: 36px;
+      font-weight: 700;
+      margin: 0 0 8px 0;
+      color: #000;
+    }
+
+    p {
+      font-size: 16px;
+      color: #666;
+      margin: 0;
+    }
+  }
+
+  .container {
+    max-width: 900px;
+    margin: 0 auto;
+  }
+
+  .card {
+    border-radius: 8px;
+  }
+
+  .avatarCol {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+  }
+
+  .avatarContainer {
+    text-align: center;
+  }
+
+  .avatar {
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  }
+
+  .infoCol {
+    padding-top: 20px;
+  }
+
+  .nameSection {
+    margin-bottom: 16px;
+
+    .name {
+      font-size: 28px;
+      font-weight: 700;
+      margin: 0;
+      color: #000;
+    }
+  }
+
+  .bioSection {
+    margin-bottom: 16px;
+
+    .bio {
+      font-size: 16px;
+      line-height: 1.6;
+      color: #666;
+      margin: 0;
+    }
+  }
+
+  .statsSection {
+    margin: 16px 0;
+
+    .stat {
+      text-align: center;
+      padding: 12px;
+      background: #fafafa;
+      border-radius: 4px;
+
+      .statNumber {
+        font-size: 24px;
+        font-weight: 700;
+        color: #1890ff;
+      }
+
+      .statLabel {
+        font-size: 12px;
+        color: #666;
+        margin-top: 4px;
+      }
+    }
+  }
+
+  .skillsSection {
+    margin: 16px 0;
+
+    h3 {
+      font-size: 16px;
+      font-weight: 600;
+      margin: 0 0 12px 0;
+      color: #000;
+    }
+  }
+
+  .socialSection {
+    margin: 16px 0;
+
+    h3 {
+      font-size: 16px;
+      font-weight: 600;
+      margin: 0 0 12px 0;
+      color: #000;
+    }
+
+    .socialButton {
+      font-size: 14px;
+      padding: 0;
+      height: auto;
+
+      &:hover {
+        color: #1890ff;
+      }
+    }
+  }
+
+  .loadingContainer {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 400px;
+  }
+}
+
+@media (max-width: 768px) {
+  .about {
+    .header {
+      h1 {
+        font-size: 24px;
+      }
+    }
+
+    .nameSection {
+      margin-bottom: 12px;
+
+      .name {
+        font-size: 20px;
+      }
+    }
+
+    .bioSection {
+      .bio {
+        font-size: 14px;
+      }
+    }
+  }
+}

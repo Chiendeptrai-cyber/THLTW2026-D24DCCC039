@@ -61,6 +61,49 @@
 		component: './CauLacBo',
 	},
 
+	// BLOG
+	{
+		path: '/blog',
+		name: 'Blog',
+		icon: 'FileTextOutlined',
+		routes: [
+			{
+				path: '/blog',
+				component: './Blog/index',
+			},
+			{
+				path: '/blog/post/:slug',
+				component: './Blog/post-detail',
+				hideInMenu: true,
+			},
+			{
+				path: '/blog/about',
+				name: 'Về tôi',
+				component: './Blog/about',
+			},
+			{
+				path: '/blog/write',
+				name: 'Viết bài',
+				component: './Blog/write',
+			},
+			{
+				path: '/blog/write/:id',
+				component: './Blog/write',
+				hideInMenu: true,
+			},
+			{
+				path: '/blog/manage',
+				name: 'Quản lý bài viết',
+				component: './Blog/manage',
+			},
+			{
+				path: '/blog/tags',
+				name: 'Quản lý thẻ',
+				component: './Blog/tag-manage',
+			},
+		],
+	},
+
 	// DANH MUC HE THONG
 	// {
 	// 	name: 'DanhMuc',
