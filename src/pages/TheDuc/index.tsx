@@ -235,7 +235,7 @@ const getStatusTagColor = (status: string) => {
   return 'blue';
 };
 
-const RandomUser = () => {
+const TheDuc = () => {
   const [activeTab, setActiveTab] = useState<'dashboard' | 'workout' | 'health' | 'goals' | 'library'>('dashboard');
   const [workouts, setWorkouts] = useState(initialWorkouts);
   const [healthLogs, setHealthLogs] = useState(initialHealthLogs);
@@ -308,6 +308,7 @@ const RandomUser = () => {
     let streak = 0;
     let previous = moment(completedDays[0].date);
     if (!previous.isSame(moment(), 'day') && !previous.isSame(moment().subtract(1, 'day'), 'day')) {
+      // start streak from most recent completed workout only if it's today or yesterday
       streak = 1;
     } else {
       streak = 1;
@@ -577,16 +578,90 @@ const RandomUser = () => {
     },
   ];
 
+  const columnsLibrary = [
+    {
+      title: 'Tên bài tập',
+      dataIndex: 'name',
+      key: 'name',
+      width: 180,
+    },
+    {
+      title: 'Nhóm cơ',
+      dataIndex: 'muscleGroup',
+      key: 'muscleGroup',
+      width: 140,
+    },
+    {
+      title: 'Mức độ',
+      dataIndex: 'difficulty',
+      key: 'difficulty',
+      width: 120,
+      render: (value: string) => {
+        const color = value === 'Easy' ? 'green' : value === 'Medium' ? 'gold' : 'red';
+        return <Tag color={color}>{value}</Tag>;
+      },
+    },
+    {
+      title: 'Calo/giờ',
+      dataIndex: 'caloriesPerHour',
+      key: 'caloriesPerHour',
+      width: 120,
+    },
+    {
+      title: 'Hành động',
+      key: 'actions',
+      width: 220,
+      render: (record: any) => (
+        <Space>
+          <Button
+            type="link"
+            onClick={() => {
+              setCurrentExercise(record);
+              setDetailModalVisible(true);
+            }}
+          >
+            Xem
+          </Button>
+          <Button
+            type="link"
+            onClick={() => {
+              setExerciseEditing(record);
+              setExerciseModalVisible(true);
+              exerciseForm.setFieldsValue(record);
+            }}
+          >
+            Sửa
+          </Button>
+          <Popconfirm
+            title="Xác nhận xóa bài tập này?"
+            onConfirm={() => {
+              setExercises((prev) => prev.filter((item) => item.id !== record.id));
+              message.success('Đã xóa bài tập');
+            }}
+          >
+            <Button type="link" danger>
+              Xóa
+            </Button>
+          </Popconfirm>
+        </Space>
+      ),
+    },
+  ];
+
   return (
     <div className="fitness-page">
       <Card>
-        <Tabs activeKey={activeTab} onChange={(key) => setActiveTab(key as any)}>
-          <Tabs.TabPane tab="Dashboard" key="dashboard" />
-          <Tabs.TabPane tab="Nhật ký tập luyện" key="workout" />
-          <Tabs.TabPane tab="Nhật ký chỉ số" key="health" />
-          <Tabs.TabPane tab="Quản lý mục tiêu" key="goals" />
-          <Tabs.TabPane tab="Thư viện bài tập" key="library" />
-        </Tabs>
+        <Tabs
+          activeKey={activeTab}
+          onChange={(key) => setActiveTab(key as any)}
+          items={[
+            { key: 'dashboard', label: 'Dashboard', children: null },
+            { key: 'workout', label: 'Nhật ký tập luyện', children: null },
+            { key: 'health', label: 'Nhật ký chỉ số', children: null },
+            { key: 'goals', label: 'Quản lý mục tiêu', children: null },
+            { key: 'library', label: 'Thư viện bài tập', children: null },
+          ]}
+        />
       </Card>
 
       {activeTab === 'dashboard' && (
@@ -977,7 +1052,7 @@ const RandomUser = () => {
         </Form>
       </Modal>
 
-      <Drawer title="Thêm mục tiêu mới" width={520} placement="right" onClose={() => setGoalDrawerVisible(false)} visible={goalDrawerVisible}>
+      <Drawer title="Thêm mục tiêu mới" width={520} placement="right" onClose={() => setGoalDrawerVisible(false)} open={goalDrawerVisible}>
         <Form form={goalForm} layout="vertical" onFinish={submitGoal}>
           <Form.Item name="name" label="Tên mục tiêu" rules={[{ required: true, message: 'Vui lòng nhập tên mục tiêu' }]}> 
             <Input />
@@ -1045,4 +1120,4 @@ const RandomUser = () => {
   );
 };
 
-export default RandomUser;
+export default TheDuc;

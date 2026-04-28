@@ -25,6 +25,12 @@
 		icon: 'HomeOutlined',
 	},
 	{
+		path: '/the-duc',
+		name: 'Thể dục',
+		icon: 'HeartOutlined',
+		component: './TheDuc',
+	},
+	{
 		path: '/gioi-thieu',
 		name: 'About',
 		component: './TienIch/GioiThieu',

@@ -1,0 +1,59 @@
+@import '~antd/es/style/themes/default.less';
+
+.fitness-page {
+  .ant-card {
+    margin-bottom: 16px;
+  }
+
+  .dashboard-cards {
+    margin-bottom: 16px;
+  }
+
+  .dashboard-charts {
+    margin-bottom: 16px;
+  }
+
+  .timeline-card .ant-timeline {
+    padding-left: 0;
+  }
+
+  .section-toolbar {
+    margin-bottom: 16px;
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 12px;
+  }
+
+  .goal-card {
+    min-height: 260px;
+  }
+
+  .goal-inline-update {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .exercise-card {
+    cursor: pointer;
+    transition: transform 0.15s ease-in-out;
+  }
+
+  .exercise-card:hover {
+    transform: translateY(-4px);
+  }
+
+  .exercise-card .ant-card-actions {
+    justify-content: flex-end;
+  }
+
+  .exercise-card .ant-card-actions li {
+    min-width: 50px;
+    text-align: center;
+  }
+
+  .ant-drawer-content-wrapper {
+    max-width: 520px;
+  }
+}
