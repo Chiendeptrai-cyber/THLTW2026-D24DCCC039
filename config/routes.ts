@@ -24,12 +24,12 @@
 		component: './TrangChu',
 		icon: 'HomeOutlined',
 	},
-	{
-		path: '/the-duc',
-		name: 'Thể dục',
-		icon: 'HeartOutlined',
-		component: './TheDuc',
-	},
+	//{
+//		path: '/the-duc',
+//		name: 'Thể dục',
+//		icon: 'HeartOutlined',
+//		component: './TheDuc',
+//	},
 	{
 		path: '/gioi-thieu',
 		name: 'About',
@@ -37,7 +37,7 @@
 		hideInMenu: true,
 	},
 	{
-		path: '/random-user',
+		path: '/the-duc',
 		name: 'RandomUser',
 		component: './RandomUser',
 		icon: 'ArrowsAltOutlined',

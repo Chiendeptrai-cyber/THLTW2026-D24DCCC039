@@ -9,7 +9,7 @@ export default {
 
 	'menu.DanhMuc': 'Danh mục',
 	'menu.DanhMuc.ChucVu': 'Chức vụ',
-	'menu.RandomUser': 'Tài khoản ngẫu nhiên',
+	'menu.RandomUser': 'Thể dục',
 	'menu.TodoList': 'Danh sách công việc',
 	'menu.CauLacBo': 'Câu lạc bộ',
 };
