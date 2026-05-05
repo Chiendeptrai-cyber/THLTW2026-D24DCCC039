@@ -49,6 +49,12 @@
 		component: './TodoList',
 	},
 	{
+		path: '/kanban',
+		name: 'Kanban',
+		icon: 'ProjectOutlined',
+		component: './Kanban',
+	},
+	{
 		path: '/khoa-hoc',
 		name: 'Khóa học',
 		icon: 'VideoCameraOutlined',
