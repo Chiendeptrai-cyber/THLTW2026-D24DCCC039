@@ -1,3 +1,5 @@
+
+
 # WEB BASE V3
 
 ## Web base v3 based on:
@@ -11,7 +13,7 @@ This project is initialized with [Web Base](https://pro.ant.design). Follow is t
 
 ## Environment Prepare
 
-Install `node_modules`:
+Install `node_modules` (requires Node.js `16.x`):
 
 ```bash
 yarn
